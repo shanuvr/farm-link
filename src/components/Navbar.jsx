@@ -42,9 +42,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#fbf8f1]/95 backdrop-blur-sm border-b border-[#e9e1ce]">
-      <div className="parchment-top-strip h-1 w-full" aria-hidden="true" />
-
+    <header className="sticky top-0 z-50 w-full bg-[#fbf8f1]/68 backdrop-blur-md backdrop-saturate-150 border-b border-[#e9e1ce]/65 shadow-[0_4px_20px_rgba(20,62,34,0.05)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 lg:h-[48px] [@media(min-width:1280px)_and_(min-height:760px)]:h-[58px]">
           {/* Logo */}
@@ -125,7 +123,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center">
             <Link
               to="/company"
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl border border-[#5d281f]/55 bg-[#fffdf8] text-[#5d281f] hover:bg-[#5d281f] hover:text-white font-semibold text-sm shadow-2xs transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl border border-[#5d281f]/55 bg-[#fffdf8]/85 backdrop-blur-xs text-[#5d281f] hover:bg-[#5d281f] hover:text-white font-semibold text-sm shadow-2xs transition-colors"
             >
               <CompanyIcon className="w-4 h-4" />
               <span>Company Login</span>

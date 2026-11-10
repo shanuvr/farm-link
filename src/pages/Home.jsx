@@ -5,7 +5,8 @@ import HowItWorksSection from '../components/HowItWorksSection'
 export default function Home() {
   return (
     <main className="w-full">
-      <div className="min-h-[calc(100dvh-3.75rem)] lg:min-h-[calc(100dvh-3.25rem)] [@media(min-width:1280px)_and_(min-height:760px)]:min-h-[calc(100dvh-3.875rem)] flex flex-col">
+      {/* Pulls above-the-fold canvas under the sticky glassmorphic Navbar so the full 100dvh frame shows sky, roof, basket, and steps */}
+      <div className="-mt-14 lg:-mt-[48px] [@media(min-width:1280px)_and_(min-height:760px)]:-mt-[58px] min-h-dvh flex flex-col">
         <HeroSection />
         <HowItWorksSection />
       </div>

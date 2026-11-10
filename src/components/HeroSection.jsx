@@ -58,8 +58,8 @@ const CELL_BORDERS = [
 export default function HeroSection() {
   return (
     <section className="relative w-full bg-[#fbf8f1]">
-      {/* Hero Banner (content-safe padding ensures text & buttons never clip on short screens) */}
-      <div className="relative w-full overflow-hidden">
+      {/* Hero Banner — extends cleanly behind the translucent glassmorphic Navbar for full sky, roof & basket framing */}
+      <div className="relative w-full min-h-[max(310px,43dvh)] sm:min-h-[max(340px,44dvh)] lg:min-h-0 flex items-center lg:block overflow-hidden">
         {/* Mobile background image */}
         <img
           src="/hero/hero-mobile-cropped.png"
@@ -68,42 +68,45 @@ export default function HeroSection() {
           fetchPriority="high"
         />
 
-        {/* Desktop background image (shifted vertically to showcase full woven basket above card) */}
-        <img
-          src="/hero/hero-desktop.png"
-          alt="Kerala veranda with a harvest of fresh vegetables"
-          className="hidden lg:block absolute inset-0 w-full h-full object-cover object-[right_91%] [@media(min-width:1280px)_and_(min-height:760px)]:object-[right_85%]"
-          fetchPriority="high"
-        />
+        {/* Desktop background image anchored to right ~68% so sky, palms, Kerala tiled roof & full basket fit naturally without over-zooming */}
+        <div className="hidden lg:block absolute inset-y-0 right-0 w-[70%] xl:w-[66%] pointer-events-none">
+          <img
+            src="/hero/hero-desktop.png"
+            alt="Kerala veranda with a harvest of fresh vegetables"
+            className="w-full h-full object-cover object-[right_86%] [@media(min-width:1280px)_and_(min-height:760px)]:object-[right_82%]"
+            fetchPriority="high"
+          />
+          {/* Smooth left edge dissolve into #fbf8f1 cream */}
+          <div
+            className="absolute inset-y-0 left-0 w-2/5 bg-gradient-to-r from-[#fbf8f1] via-[#fbf8f1]/75 to-transparent"
+            aria-hidden="true"
+          />
+        </div>
 
         {/* Mobile readability wash */}
         <div
-          className="lg:hidden absolute inset-0 bg-[linear-gradient(100deg,rgba(251,248,241,0.95)_0%,rgba(251,248,241,0.86)_44%,rgba(251,248,241,0.38)_68%,rgba(251,248,241,0.05)_90%)] pointer-events-none"
+          className="lg:hidden absolute inset-0 bg-[linear-gradient(100deg,rgba(251,248,241,0.96)_0%,rgba(251,248,241,0.90)_48%,rgba(251,248,241,0.44)_70%,rgba(251,248,241,0.05)_92%)] pointer-events-none"
           aria-hidden="true"
         />
         <div
-          className="lg:hidden absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#fbf8f1]/85 via-[#fbf8f1]/40 to-transparent pointer-events-none"
+          className="lg:hidden absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#fbf8f1]/75 via-[#fbf8f1]/30 to-transparent pointer-events-none"
           aria-hidden="true"
         />
 
-        {/* Desktop readability wash */}
+        {/* Desktop readability wash across left column */}
         <div
-          className="hidden lg:block absolute inset-0 bg-[linear-gradient(90deg,rgba(251,248,241,0.94)_0%,rgba(251,248,241,0.84)_34%,rgba(251,248,241,0.36)_54%,transparent_76%)] pointer-events-none"
-          aria-hidden="true"
-        />
-        <div
-          className="hidden lg:block absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#fbf8f1]/55 to-transparent pointer-events-none"
+          className="hidden lg:block absolute inset-0 bg-[linear-gradient(90deg,#fbf8f1_0%,#fbf8f1_28%,rgba(251,248,241,0.86)_40%,rgba(251,248,241,0.28)_55%,transparent_70%)] pointer-events-none"
           aria-hidden="true"
         />
 
-        {/* Subtle bottom blend */}
+        {/* Subtle bottom edge blend */}
         <div
-          className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#fbf8f1]/45 to-transparent pointer-events-none"
+          className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#fbf8f1]/40 to-transparent pointer-events-none"
           aria-hidden="true"
         />
 
-        {/* Foreground Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3.5 pb-8 sm:pt-5 sm:pb-10 lg:pt-2.5 lg:pb-7 [@media(min-width:1280px)_and_(min-height:760px)]:pt-7 [@media(min-width:1280px)_and_(min-height:760px)]:pb-12">
+        {/* Foreground Content (top padding clears glassmorphic Navbar) */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[68px] pb-8 sm:pt-[74px] sm:pb-10 lg:pt-[60px] lg:pb-8 [@media(min-width:1280px)_and_(min-height:760px)]:pt-[84px] [@media(min-width:1280px)_and_(min-height:760px)]:pb-12">
           <div className="w-full max-w-[245px] sm:max-w-[350px] lg:max-w-[495px] xl:max-w-[530px]">
             <h1 className="font-serif text-[#143e22] text-[25px] sm:text-[34px] lg:text-[34px] xl:text-[38px] [@media(min-width:1280px)_and_(min-height:760px)]:text-[48px] font-bold tracking-tight leading-[1.06]">
               Your Harvest,

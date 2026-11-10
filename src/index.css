@@ -16,22 +16,3 @@ body {
   background-color: var(--color-farm-cream);
   color: #2c3e2d;
 }
-
-.parchment-top-strip {
-  background-color: #ece0c4;
-  background-image:
-    repeating-linear-gradient(
-      90deg,
-      rgba(93, 40, 31, 0.14) 0px,
-      rgba(93, 40, 31, 0.14) 2px,
-      transparent 2px,
-      transparent 8px
-    ),
-    repeating-linear-gradient(
-      45deg,
-      rgba(26, 77, 46, 0.08) 0px,
-      rgba(26, 77, 46, 0.08) 3px,
-      transparent 3px,
-      transparent 9px
-    );
-}
