@@ -3,7 +3,7 @@ import { Link, Navigate, Outlet, useLocation, useNavigate } from 'react-router-d
 import CompanyMobileDock from '../components/CompanyMobileDock'
 import CompanySidebar from '../components/CompanySidebar'
 import { BrowseIcon, FarmersIcon, ReportsIcon, SettingsIcon } from '../components/CompanyIcons'
-import { FarmLinkLogoMark } from '../components/FarmerIcons'
+import { FarmLinkMobileHeaderBrand } from '../components/FarmerIcons'
 import { useCompany } from '../context/companyContextStore'
 
 const ROUTE_TITLES = [
@@ -82,12 +82,7 @@ export default function CompanyLayout() {
         {/* Top Utility Bar matching reference layout */}
         <header className="sticky top-0 z-30 h-14 bg-white/95 backdrop-blur-md border-b border-[#e2e6e1] px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
-            <Link to="/company/dashboard" className="lg:hidden flex items-center gap-2 shrink-0">
-              <FarmLinkLogoMark className="w-7 h-7" />
-              <span className="font-serif text-lg font-bold text-[#143e22] tracking-tight">
-                FarmLink
-              </span>
-            </Link>
+            <FarmLinkMobileHeaderBrand to="/company/dashboard" badge="Buyer" />
 
             <div className="hidden lg:flex items-center gap-2.5">
               <h2 className="font-serif text-lg font-bold text-slate-900 tracking-tight">

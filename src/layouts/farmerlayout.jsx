@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { FarmLinkLogoMark, PlusIcon, ReportsIcon } from '../components/FarmerIcons'
+import { FarmLinkMobileHeaderBrand, PlusIcon, ReportsIcon } from '../components/FarmerIcons'
 import FarmerMobileDock from '../components/FarmerMobileDock'
 import FarmerSidebar from '../components/FarmerSidebar'
 import { useFarmer } from '../context/farmerContextStore'
@@ -61,15 +61,7 @@ export default function FarmerLayout() {
         <header className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-[#e2e6e1]">
           <div className="max-w-6xl mx-auto px-3.5 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-3">
             {/* Mobile Brand */}
-            <Link to="/farmers" className="lg:hidden flex items-center gap-2 shrink-0">
-              <FarmLinkLogoMark className="w-8 h-8" />
-              <div className="flex flex-col leading-none">
-                <span className="font-serif text-lg font-bold text-[#143e22]">FarmLink</span>
-                <span className="text-[9.5px] font-semibold tracking-wide text-[#2c6e43] uppercase mt-0.5">
-                  Farmer Portal
-                </span>
-              </div>
-            </Link>
+            <FarmLinkMobileHeaderBrand to="/farmers" badge="Farmer" />
 
             {/* Desktop Clean Breadcrumb */}
             <div className="hidden lg:flex items-center gap-2 text-xs text-[#5e7160]">

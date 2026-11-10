@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { FarmLinkLogo } from './FarmerIcons'
 
 export default function Footer({ showWave = true }) {
   return (
@@ -33,12 +34,10 @@ export default function Footer({ showWave = true }) {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-white/10">
           {/* Brand Info */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2">
-              <span className="font-serif text-2xl font-bold tracking-tight text-white">
-                FarmLink
-              </span>
-            </div>
-            <p className="text-xs text-green-200 mt-0.5">Connecting Farmers with Buyers</p>
+            <Link to="/" className="inline-flex items-center" aria-label="FarmLink Home">
+              <FarmLinkLogo onDark imgClassName="h-9 sm:h-10 w-auto" className="px-3 py-1.5 rounded-2xl" />
+            </Link>
+            <p className="text-xs text-green-200 mt-2.5">Connecting Farmers with Buyers</p>
             <p className="mt-3 text-sm text-green-100/80 max-w-md leading-relaxed">
               A transparent, organized, and direct agricultural procurement platform designed to empower farmers and streamline produce sourcing in Kerala, India.
             </p>

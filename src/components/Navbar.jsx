@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import { FarmLinkLogo } from './FarmerIcons'
 
 const NAV_LINKS = [
   {
@@ -99,43 +100,14 @@ export default function Navbar() {
       <header className="sticky top-0 z-50 w-full bg-[#fbf8f1]/78 backdrop-blur-md backdrop-saturate-150 border-b border-[#e9e1ce]/70 shadow-[0_4px_20px_rgba(20,62,34,0.05)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 lg:h-[48px] [@media(min-width:1280px)_and_(min-height:760px)]:h-[58px]">
-          {/* Logo */}
+          {/* Brand Logo */}
           <Link
             to="/"
             onClick={() => setMobileOpen(false)}
-            className="flex items-center gap-2 select-none group shrink-0"
+            className="flex items-center select-none group shrink-0"
+            aria-label="FarmLink Home"
           >
-            <svg
-              viewBox="0 0 72 62"
-              className="w-9 h-9 lg:w-10 lg:h-10 shrink-0"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M20 28L36 15L52 28H20Z" fill="#1b4d29" stroke="#12381e" strokeWidth="1.8" strokeLinejoin="round" />
-              <path d="M22 25.5L36 14.5L50 25.5" stroke="#9cc594" strokeWidth="1.5" strokeLinecap="round" />
-              <rect x="25" y="28" width="3" height="11" fill="#12381e" rx="0.5" />
-              <rect x="34.5" y="28" width="3" height="11" fill="#12381e" rx="0.5" />
-              <rect x="44" y="28" width="3" height="11" fill="#12381e" rx="0.5" />
-              <path d="M13 32C10 27 5 25 3 25C5 27 7 30 10 33" stroke="#2b6b3b" strokeWidth="1.8" strokeLinecap="round" />
-              <path d="M14 31C14 25 18 22 20 21C18 24 16 28 14 32" stroke="#2b6b3b" strokeWidth="1.8" strokeLinecap="round" />
-              <path d="M13 40C12 36 13 33 14 31" stroke="#133d1f" strokeWidth="2" strokeLinecap="round" />
-              <path d="M58 32C61 27 66 26 68 26C66 28 64 31 61 34" stroke="#2b6b3b" strokeWidth="1.8" strokeLinecap="round" />
-              <path d="M57 31C57 26 53 23 51 22C53 25 55 28 57 32" stroke="#2b6b3b" strokeWidth="1.8" strokeLinecap="round" />
-              <path d="M4 42C18 36 38 35 68 39" stroke="#1b4d29" strokeWidth="3.6" strokeLinecap="round" />
-              <path d="M9 48C24 42 44 41 63 46" stroke="#2d6d3d" strokeWidth="3.2" strokeLinecap="round" />
-              <path d="M16 54C29 49 46 48 57 52" stroke="#4f885e" strokeWidth="2.6" strokeLinecap="round" />
-              <path d="M36 14C36 10 39 8 42 8C42 10 40 12.5 36 14Z" fill="#5aa866" />
-              <path d="M36 14C35 10 33 9 30 9C30 11 32 13 36 14Z" fill="#478a53" />
-            </svg>
-
-            <div className="flex flex-col leading-none">
-              <span className="font-serif text-[21px] lg:text-[23px] font-bold tracking-tight text-[#143e22]">
-                FarmLink
-              </span>
-              <span className="text-[9.5px] sm:text-[10px] font-medium tracking-wide text-[#1f532e]/85 mt-0.5">
-                Connecting Farmers with Buyers
-              </span>
-            </div>
+            <FarmLinkLogo imgClassName="h-9 sm:h-10 lg:h-[38px] [@media(min-width:1280px)_and_(min-height:760px)]:h-11 w-auto" />
           </Link>
 
           {/* Desktop nav */}

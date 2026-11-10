@@ -8,7 +8,7 @@ import {
   ReportsIcon,
   SettingsIcon,
 } from './CompanyIcons'
-import { FarmLinkLogoMark } from './FarmerIcons'
+import { FarmLinkSidebarBrand } from './FarmerIcons'
 
 /**
  * Illustrated dark forest-green sidebar navigation for the Company Procurement Portal.
@@ -94,19 +94,11 @@ export default function CompanySidebar({
       aria-label="Company procurement sidebar navigation"
     >
       {/* Top Brand Header */}
-      <div className="h-14 px-5 border-b border-white/12 flex items-center">
-        <Link to="/company/dashboard" className="flex items-center gap-2.5">
-          <FarmLinkLogoMark className="w-8 h-8" light />
-          <div className="flex flex-col leading-none">
-            <span className="font-serif text-[19px] font-bold tracking-tight text-white">
-              FarmLink
-            </span>
-            <span className="text-[9px] font-semibold tracking-wider text-emerald-200/85 uppercase mt-0.5">
-              Procurement Desk
-            </span>
-          </div>
-        </Link>
-      </div>
+      <FarmLinkSidebarBrand
+        to="/company/dashboard"
+        portalLabelTop="Procurement"
+        portalLabelBottom="Desk"
+      />
 
       {/* Navigation Sections */}
       <div className="flex-1 px-3 py-4 space-y-5 overflow-y-auto no-scrollbar">

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FarmLinkLogoMark } from '../components/FarmerIcons'
+import { FarmLinkMobileHeaderBrand, FarmLinkSidebarBrand } from '../components/FarmerIcons'
 import {
   ADMIN_PROFILE,
   INITIAL_FARMER_APPLICATIONS,
@@ -207,19 +207,11 @@ export default function AdminHome() {
         style={{ backgroundImage: "url('/hero/side%20bar%20bg.png')" }}
         aria-label="Admin sidebar navigation"
       >
-        <div className="h-14 px-5 border-b border-white/12 flex items-center">
-          <Link to="/" className="flex items-center gap-2.5">
-            <FarmLinkLogoMark className="w-8 h-8" light />
-            <div className="flex flex-col leading-none">
-              <span className="font-serif text-[19px] font-bold tracking-tight text-white">
-                FarmLink
-              </span>
-              <span className="text-[9px] font-semibold tracking-wider text-emerald-200/85 uppercase mt-0.5">
-                Admin Control
-              </span>
-            </div>
-          </Link>
-        </div>
+        <FarmLinkSidebarBrand
+          to="/"
+          portalLabelTop="Admin"
+          portalLabelBottom="Control"
+        />
 
         <div className="flex-1 px-3 py-4 overflow-y-auto no-scrollbar">
           <p className="px-3 mb-1.5 text-[10px] font-semibold tracking-widest text-emerald-200/55 uppercase">
@@ -300,15 +292,7 @@ export default function AdminHome() {
         {/* Top Bar */}
         <header className="sticky top-0 z-30 h-14 bg-white/95 backdrop-blur-md border-b border-[#e2e6e1] px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2.5 min-w-0">
-            <Link to="/" className="lg:hidden flex items-center gap-2 shrink-0">
-              <FarmLinkLogoMark className="w-8 h-8" />
-              <div className="flex flex-col leading-none">
-                <span className="font-serif text-lg font-bold text-[#143e22]">FarmLink</span>
-                <span className="text-[9px] font-semibold tracking-wide text-[#184828] uppercase">
-                  Admin Control
-                </span>
-              </div>
-            </Link>
+            <FarmLinkMobileHeaderBrand to="/" badge="Admin" />
 
             <div className="hidden lg:flex items-center gap-2 text-xs text-slate-500">
               <span>Admin Control</span>

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export function HomeIcon({ className = 'w-5 h-5' }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
@@ -67,28 +69,69 @@ export function ReportsIcon({ className = 'w-5 h-5' }) {
   )
 }
 
-export function FarmLinkLogoMark({ className = 'w-8 h-8', light = false }) {
-  const roofFill = light ? '#edf5e6' : '#1b4d29'
-  const roofStroke = light ? '#d7ebc8' : '#12381e'
-  const trimStroke = light ? '#6ec468' : '#9cc594'
-  const pillarFill = light ? '#143e22' : '#12381e'
-  const wavePrimary = light ? '#a8df89' : '#1b4d29'
-  const waveSecondary = light ? '#77c765' : '#2d6d3d'
-  const sproutRight = light ? '#a8df89' : '#5aa866'
-  const sproutLeft = light ? '#84cf71' : '#478a53'
+/**
+ * Brand horizontal lockup backed with a soft white gradient pill on dark-green surfaces.
+ */
+export function FarmLinkLogo({
+  onDark = false,
+  className = '',
+  imgClassName = 'h-8 w-auto',
+}) {
+  const logoImg = (
+    <img
+      src="/FarmLink%20Green%20Landscape%20Logo.png"
+      alt="FarmLink"
+      className={`${imgClassName} object-contain shrink-0 select-none`}
+    />
+  )
+
+  if (!onDark) {
+    return (
+      <span className={`inline-flex items-center shrink-0 ${className}`}>
+        {logoImg}
+      </span>
+    )
+  }
 
   return (
-    <svg viewBox="0 0 72 62" className={`${className} shrink-0`} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 28L36 15L52 28H20Z" fill={roofFill} stroke={roofStroke} strokeWidth="1.8" strokeLinejoin="round" />
-      <path d="M22 25.5L36 14.5L50 25.5" stroke={trimStroke} strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="25" y="28" width="3" height="11" fill={pillarFill} rx="0.5" />
-      <rect x="34.5" y="28" width="3" height="11" fill={pillarFill} rx="0.5" />
-      <rect x="44" y="28" width="3" height="11" fill={pillarFill} rx="0.5" />
-      <path d="M4 42C18 36 38 35 68 39" stroke={wavePrimary} strokeWidth="3.6" strokeLinecap="round" />
-      <path d="M9 48C24 42 44 41 63 46" stroke={waveSecondary} strokeWidth="3.2" strokeLinecap="round" />
-      <path d="M36 14C36 10 39 8 42 8C42 10 40 12.5 36 14Z" fill={sproutRight} />
-      <path d="M36 14C35 10 33 9 30 9C30 11 32 13 36 14Z" fill={sproutLeft} />
-    </svg>
+    <span
+      className={`inline-flex items-center shrink-0 rounded-xl bg-[linear-gradient(135deg,rgba(255,255,255,0.98)_0%,rgba(247,251,243,0.93)_62%,rgba(225,241,216,0.85)_100%)] px-2 py-1 shadow-[0_4px_14px_rgba(6,28,12,0.24)] ring-1 ring-white/55 ${className}`}
+    >
+      {logoImg}
+    </span>
+  )
+}
+
+/**
+ * Compact dark-sidebar brand header keeping h-14 alignment with main workspace bar.
+ */
+export function FarmLinkSidebarBrand({ to, portalLabelTop, portalLabelBottom }) {
+  return (
+    <div className="h-14 px-3.5 border-b border-white/12 flex items-center">
+      <Link to={to} className="flex items-center gap-2.5 min-w-0">
+        <FarmLinkLogo onDark imgClassName="h-7.5 w-auto" />
+        <div className="border-l border-white/18 pl-2.5 flex flex-col leading-[1.18] text-[8.5px] font-bold tracking-[0.12em] text-emerald-200/90 uppercase">
+          <span>{portalLabelTop}</span>
+          <span>{portalLabelBottom}</span>
+        </div>
+      </Link>
+    </div>
+  )
+}
+
+/**
+ * Compact light-surface mobile header lockup shared across portal shells.
+ */
+export function FarmLinkMobileHeaderBrand({ to, badge }) {
+  return (
+    <Link to={to} className="lg:hidden flex items-center gap-2 shrink-0">
+      <FarmLinkLogo imgClassName="h-8 sm:h-9 w-auto" />
+      {badge && (
+        <span className="px-2 py-0.5 rounded-full bg-[#e8f3e1] border border-[#cde2be] text-[#184828] text-[9.5px] font-bold tracking-wide uppercase">
+          {badge}
+        </span>
+      )}
+    </Link>
   )
 }
 

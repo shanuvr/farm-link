@@ -1,7 +1,7 @@
 import { Link, NavLink } from 'react-router-dom'
 import {
   ConfirmedIcon,
-  FarmLinkLogoMark,
+  FarmLinkSidebarBrand,
   HomeIcon,
   ListingsIcon,
   OffersIcon,
@@ -94,19 +94,11 @@ export default function FarmerSidebar({
       aria-label="Farmer sidebar navigation"
     >
       {/* Top Brand Header */}
-      <div className="h-14 px-5 border-b border-white/12 flex items-center">
-        <Link to="/farmers" className="flex items-center gap-2.5">
-          <FarmLinkLogoMark className="w-8 h-8" light />
-          <div className="flex flex-col leading-none">
-            <span className="font-serif text-[19px] font-bold tracking-tight text-white">
-              FarmLink
-            </span>
-            <span className="text-[9px] font-semibold tracking-wider text-emerald-200/85 uppercase mt-0.5">
-              Farmer Portal
-            </span>
-          </div>
-        </Link>
-      </div>
+      <FarmLinkSidebarBrand
+        to="/farmers"
+        portalLabelTop="Farmer"
+        portalLabelBottom="Portal"
+      />
 
       {/* Navigation Sections */}
       <div className="flex-1 px-3 py-4 space-y-5 overflow-y-auto no-scrollbar">
