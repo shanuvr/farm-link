@@ -103,9 +103,9 @@ export default function HeroSection() {
         />
 
         {/* Foreground Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3.5 pb-8 sm:pt-5 sm:pb-10 lg:pt-3 lg:pb-8 [@media(min-width:1280px)_and_(min-height:760px)]:pt-7 [@media(min-width:1280px)_and_(min-height:760px)]:pb-12">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3.5 pb-8 sm:pt-5 sm:pb-10 lg:pt-2.5 lg:pb-7 [@media(min-width:1280px)_and_(min-height:760px)]:pt-7 [@media(min-width:1280px)_and_(min-height:760px)]:pb-12">
           <div className="w-full max-w-[245px] sm:max-w-[350px] lg:max-w-[495px] xl:max-w-[530px]">
-            <h1 className="font-serif text-[#143e22] text-[25px] sm:text-[34px] lg:text-[36px] xl:text-[42px] [@media(min-width:1280px)_and_(min-height:760px)]:text-[48px] font-bold tracking-tight leading-[1.06]">
+            <h1 className="font-serif text-[#143e22] text-[25px] sm:text-[34px] lg:text-[34px] xl:text-[38px] [@media(min-width:1280px)_and_(min-height:760px)]:text-[48px] font-bold tracking-tight leading-[1.06]">
               Your Harvest,
               <br />
               A Reliable Market
@@ -120,7 +120,7 @@ export default function HeroSection() {
               <div className="flex-1 h-[1px] bg-[#3a7548]/45 rounded-full" />
             </div>
 
-            <p className="text-[#253828] text-[11.5px] sm:text-[13.5px] lg:text-[14px] xl:text-[15px] [@media(min-width:1280px)_and_(min-height:760px)]:text-[16px] leading-[1.35]">
+            <p className="text-[#253828] text-[11.5px] sm:text-[13.5px] lg:text-[13.5px] xl:text-[14px] [@media(min-width:1280px)_and_(min-height:760px)]:text-[16px] leading-[1.33]">
               A simple and trusted platform that connects farmers directly with a purchasing company. List your produce, get fair offers, and sell with confidence.
             </p>
 

@@ -43,7 +43,7 @@ function WatercolorSplash() {
 
 export default function HowItWorksSection() {
   return (
-    <section className="relative flex-1 w-full bg-[#fbf8f1] flex flex-col justify-between pt-3 sm:pt-4 lg:pt-2 [@media(min-width:1280px)_and_(min-height:760px)]:pt-5 pb-12 sm:pb-14 lg:pb-9 [@media(min-width:1280px)_and_(min-height:760px)]:pb-16 overflow-x-clip">
+    <section className="relative flex-1 w-full bg-[#fbf8f1] flex flex-col justify-between pt-3 sm:pt-4 lg:pt-2 [@media(min-width:1280px)_and_(min-height:760px)]:pt-5 pb-12 sm:pb-14 lg:pb-[clamp(54px,5.2vw,84px)] [@media(min-width:1280px)_and_(min-height:760px)]:pb-[clamp(68px,6vw,96px)] overflow-x-clip">
       {/* Bottom Rural Landscape & Wave Backdrop (full aspect ratio, never height-cropped) */}
       <div className="hidden sm:block absolute inset-x-0 bottom-0 pointer-events-none select-none z-0" aria-hidden="true">
         <img
@@ -60,35 +60,35 @@ export default function HowItWorksSection() {
         />
       </div>
 
-      {/* Main Content */}
+      {/* Main Content — constrained inside central open space on lg+ so steps sit cleanly between side palm sketches and above wave */}
       <div className="relative z-10 max-w-7xl mx-auto w-full px-2.5 sm:px-6 lg:px-8 my-auto">
         {/* Section Header with ornamental leaf accents */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3.5 mb-3 sm:mb-4 lg:mb-1.5 [@media(min-width:1280px)_and_(min-height:760px)]:mb-5">
-          <div className="w-8 sm:w-16 lg:w-24 h-[1px] bg-[#5d281f]/35 rounded-full" />
+        <div className="flex items-center justify-center gap-2 sm:gap-3 lg:gap-3 mb-3 sm:mb-4 lg:mb-2 [@media(min-width:1280px)_and_(min-height:760px)]:mb-5">
+          <div className="w-8 sm:w-16 lg:w-20 h-[1px] bg-[#5d281f]/35 rounded-full" />
 
           <div className="flex items-center gap-1.5 sm:gap-2">
-            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-[#3a7548]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <svg className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#3a7548]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M21 3C11.5 3 7 8 7 14c0 1.5.3 3 .8 4.2L3 21l3.8-4.8c1.2.5 2.7.8 4.2.8 6 0 11-4.5 11-14z" />
             </svg>
 
-            <h2 className="font-serif text-[20px] sm:text-2xl lg:text-[26px] xl:text-[28px] [@media(min-width:1280px)_and_(min-height:760px)]:text-[32px] font-bold text-[#143e22] tracking-tight whitespace-nowrap">
+            <h2 className="font-serif text-[20px] sm:text-2xl lg:text-[22px] xl:text-[24px] [@media(min-width:1280px)_and_(min-height:760px)]:text-[30px] font-bold text-[#143e22] tracking-tight whitespace-nowrap">
               How FarmLink Works
             </h2>
 
-            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-[#3a7548] -scale-x-100" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <svg className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#3a7548] -scale-x-100" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M21 3C11.5 3 7 8 7 14c0 1.5.3 3 .8 4.2L3 21l3.8-4.8c1.2.5 2.7.8 4.2.8 6 0 11-4.5 11-14z" />
             </svg>
           </div>
 
-          <div className="w-8 sm:w-16 lg:w-24 h-[1px] bg-[#5d281f]/35 rounded-full" />
+          <div className="w-8 sm:w-16 lg:w-20 h-[1px] bg-[#5d281f]/35 rounded-full" />
         </div>
 
-        {/* 4-Step Horizontal Process Grid (4 columns across mobile & desktop) */}
-        <div className="grid grid-cols-4 gap-1 sm:gap-3 lg:gap-6 relative items-start">
+        {/* 4-Step Horizontal Process Grid (centered inside open cream space on lg+) */}
+        <div className="grid grid-cols-4 gap-1 sm:gap-3 lg:gap-4 lg:max-w-[720px] xl:max-w-[850px] [@media(min-width:1280px)_and_(min-height:760px)]:max-w-[960px] mx-auto relative items-start">
           {STEPS.map((step, idx) => (
             <div key={step.num} className="relative flex flex-col items-center text-center group">
-              {/* Organic watercolor splash behind illustration */}
-              <div className="relative w-14 h-12 sm:w-22 sm:h-18 lg:w-20 lg:h-15 xl:w-22 xl:h-16 [@media(min-width:1280px)_and_(min-height:760px)]:w-30 [@media(min-width:1280px)_and_(min-height:760px)]:h-24 flex items-center justify-center p-1 sm:p-1.5 transition-transform duration-200 group-hover:scale-105">
+              {/* Compact organic watercolor splash behind illustration */}
+              <div className="relative w-14 h-12 sm:w-20 sm:h-16 lg:w-17 lg:h-13 xl:w-18 xl:h-14 [@media(min-width:1280px)_and_(min-height:760px)]:w-26 [@media(min-width:1280px)_and_(min-height:760px)]:h-20 flex items-center justify-center p-1 transition-transform duration-200 group-hover:scale-105">
                 <WatercolorSplash />
                 <img
                   src={step.icon}
@@ -97,24 +97,24 @@ export default function HowItWorksSection() {
                 />
               </div>
 
-              {/* Step Title */}
-              <h3 className="font-serif font-bold text-[10.5px] sm:text-[13px] lg:text-[15px] [@media(min-width:1280px)_and_(min-height:760px)]:text-[17px] text-[#143e22] leading-[1.2] mt-1">
+              {/* Compact Step Title */}
+              <h3 className="font-serif font-bold text-[10.5px] sm:text-[12.5px] lg:text-[13px] xl:text-[13.5px] [@media(min-width:1280px)_and_(min-height:760px)]:text-[16px] text-[#143e22] leading-[1.2] mt-1">
                 {step.num}
               </h3>
 
-              {/* Step Description (visible on lg+ matching desktop mockup) */}
-              <p className="hidden lg:block mt-0.5 text-[11.5px] xl:text-[12px] [@media(min-width:1280px)_and_(min-height:760px)]:text-[13px] text-[#465a48] max-w-[215px] leading-[1.3]">
+              {/* Compact Step Description (visible on lg+) */}
+              <p className="hidden lg:block mt-0.5 text-[10.5px] xl:text-[11px] [@media(min-width:1280px)_and_(min-height:760px)]:text-[12.5px] text-[#465a48] max-w-[175px] [@media(min-width:1280px)_and_(min-height:760px)]:max-w-[205px] leading-[1.25]">
                 {step.text}
               </p>
 
               {/* Connecting Arrow between columns */}
               {idx < STEPS.length - 1 && (
                 <div
-                  className="flex absolute top-4 sm:top-7 lg:top-6 [@media(min-width:1280px)_and_(min-height:760px)]:top-9 -right-2 sm:-right-3 lg:-right-4 items-center justify-center text-[#5d281f]/75 pointer-events-none z-20"
+                  className="flex absolute top-4 sm:top-6 lg:top-4.5 [@media(min-width:1280px)_and_(min-height:760px)]:top-7 -right-2 sm:-right-2.5 lg:-right-3 items-center justify-center text-[#5d281f]/75 pointer-events-none z-20"
                   aria-hidden="true"
                 >
                   <svg
-                    className="w-3.5 h-3.5 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-4.5 lg:h-4.5 [@media(min-width:1280px)_and_(min-height:760px)]:w-5 [@media(min-width:1280px)_and_(min-height:760px)]:h-5"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
