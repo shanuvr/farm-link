@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import AcceptOfferModal from '../components/AcceptOfferModal'
 import { useFarmer } from '../context/farmerContextStore'
 import { formatINR, REJECT_REASONS } from './farmerData'
 import ProduceThumb from './ProduceThumb'
@@ -20,6 +21,7 @@ export default function FarmerOffers() {
   const [rejectId, setRejectId] = useState(null)
   const [rejectReason, setRejectReason] = useState(REJECT_REASONS[0])
   const [justAcceptedName, setJustAcceptedName] = useState('')
+  const [acceptingOffer, setAcceptingOffer] = useState(null)
 
   const actionCount = offers.filter((o) => o.status === 'pending_farmer').length
   const counteredCount = offers.filter((o) => o.status === 'countered_by_farmer').length
@@ -51,10 +53,16 @@ export default function FarmerOffers() {
   }
 
   const handleAccept = (offer) => {
-    acceptOffer(offer.id)
+    setAcceptingOffer(offer)
+  }
+
+  const handleConfirmAccept = (options) => {
+    if (!acceptingOffer) return
+    acceptOffer(acceptingOffer.id, options)
     setCounterId(null)
     setRejectId(null)
-    setJustAcceptedName(offer.productName)
+    setJustAcceptedName(acceptingOffer.productName)
+    setAcceptingOffer(null)
   }
 
   return (
@@ -366,6 +374,16 @@ export default function FarmerOffers() {
             )
           })}
         </div>
+      )}
+
+      {acceptingOffer && (
+        <AcceptOfferModal
+          key={acceptingOffer.id}
+          offer={acceptingOffer}
+          role="farmer"
+          onClose={() => setAcceptingOffer(null)}
+          onConfirm={handleConfirmAccept}
+        />
       )}
     </div>
   )

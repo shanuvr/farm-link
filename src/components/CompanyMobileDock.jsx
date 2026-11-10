@@ -7,7 +7,7 @@ import { BrowseIcon, DashboardIcon, OffersIcon, OrdersIcon } from './CompanyIcon
 export default function CompanyMobileDock({ counterOffersCount, actionOrdersCount }) {
   return (
     <nav
-      className="lg:hidden fixed bottom-2.5 inset-x-3 z-50 max-w-md mx-auto"
+      className="lg:hidden fixed bottom-2.5 inset-x-3 z-40 max-w-md mx-auto"
       aria-label="Mobile company navigation"
     >
       <div className="bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl shadow-[0_10px_30px_rgba(15,23,42,0.12)] px-2 py-1.5 grid grid-cols-4 items-center">

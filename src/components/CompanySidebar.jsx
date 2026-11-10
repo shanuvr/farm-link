@@ -11,7 +11,7 @@ import {
 import { FarmLinkLogoMark } from './FarmerIcons'
 
 /**
- * Crisp white institutional sidebar navigation for the Company Procurement Portal.
+ * Illustrated dark forest-green sidebar navigation for the Company Procurement Portal.
  */
 export default function CompanySidebar({
   companyProfile,
@@ -26,16 +26,16 @@ export default function CompanySidebar({
       label: 'Negotiations',
       path: '/company/offers',
       badge: counterOffersCount,
-      badgeCls: 'bg-amber-100 text-amber-800',
-      activeBadgeCls: 'bg-white/20 text-white',
+      badgeCls: 'bg-[#f4c150] text-[#143e22]',
+      activeBadgeCls: 'bg-[#184828] text-white',
       icon: OffersIcon,
     },
     {
       label: 'Orders & Logistics',
       path: '/company/orders',
       badge: actionOrdersCount,
-      badgeCls: 'bg-slate-200 text-slate-800',
-      activeBadgeCls: 'bg-white/20 text-white',
+      badgeCls: 'bg-white/15 text-white',
+      activeBadgeCls: 'bg-[#184828] text-white',
       icon: OrdersIcon,
     },
   ]
@@ -54,10 +54,10 @@ export default function CompanySidebar({
         to={item.path}
         end={item.end}
         className={({ isActive }) =>
-          `flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-[13.5px] transition-colors focus:outline-none ${
+          `flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-[13.5px] transition-all focus:outline-none ${
             isActive
-              ? 'bg-[#1e293b] text-white font-semibold shadow-2xs'
-              : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900 font-medium'
+              ? 'bg-[#edf5e6] text-[#143e22] font-semibold shadow-sm'
+              : 'text-white/90 hover:bg-white/10 hover:text-white font-medium'
           }`
         }
       >
@@ -66,7 +66,7 @@ export default function CompanySidebar({
             <span className="flex items-center gap-2.5 min-w-0">
               <Icon
                 className={`w-4.5 h-4.5 shrink-0 ${
-                  isActive ? 'text-white' : 'text-slate-500'
+                  isActive ? 'text-[#184828]' : 'text-emerald-100/80'
                 }`}
               />
               <span className="truncate">{item.label}</span>
@@ -89,18 +89,19 @@ export default function CompanySidebar({
 
   return (
     <aside
-      className="hidden lg:flex lg:flex-col lg:w-60 lg:shrink-0 sticky top-0 h-dvh bg-white border-r border-[#e2e6e1] select-none"
+      className="hidden lg:flex lg:flex-col lg:w-60 lg:shrink-0 sticky top-0 h-dvh bg-[#144021] bg-cover bg-bottom bg-no-repeat text-white border-r border-[#0f3319] select-none"
+      style={{ backgroundImage: "url('/hero/side%20bar%20bg.png')" }}
       aria-label="Company procurement sidebar navigation"
     >
-      {/* Top Brand Header aligned horizontally at h-14 */}
-      <div className="h-14 px-5 border-b border-[#e2e6e1] flex items-center">
+      {/* Top Brand Header */}
+      <div className="h-14 px-5 border-b border-white/12 flex items-center">
         <Link to="/company/dashboard" className="flex items-center gap-2.5">
-          <FarmLinkLogoMark className="w-8 h-8" />
+          <FarmLinkLogoMark className="w-8 h-8" light />
           <div className="flex flex-col leading-none">
-            <span className="font-serif text-[19px] font-bold tracking-tight text-[#143e22]">
+            <span className="font-serif text-[19px] font-bold tracking-tight text-white">
               FarmLink
             </span>
-            <span className="text-[9px] font-semibold tracking-wider text-slate-500 uppercase mt-0.5">
+            <span className="text-[9px] font-semibold tracking-wider text-emerald-200/85 uppercase mt-0.5">
               Procurement Desk
             </span>
           </div>
@@ -108,9 +109,9 @@ export default function CompanySidebar({
       </div>
 
       {/* Navigation Sections */}
-      <div className="flex-1 px-3 py-4 space-y-5 overflow-y-auto">
+      <div className="flex-1 px-3 py-4 space-y-5 overflow-y-auto no-scrollbar">
         <div>
-          <p className="px-3 mb-1.5 text-[10px] font-semibold tracking-widest text-slate-400 uppercase">
+          <p className="px-3 mb-1.5 text-[10px] font-semibold tracking-widest text-emerald-200/55 uppercase">
             Procurement
           </p>
           <nav className="space-y-1" aria-label="Primary company navigation">
@@ -119,7 +120,7 @@ export default function CompanySidebar({
         </div>
 
         <div>
-          <p className="px-3 mb-1.5 text-[10px] font-semibold tracking-widest text-slate-400 uppercase">
+          <p className="px-3 mb-1.5 text-[10px] font-semibold tracking-widest text-emerald-200/55 uppercase">
             Network &amp; Insights
           </p>
           <nav className="space-y-1" aria-label="Secondary company navigation">
@@ -128,32 +129,32 @@ export default function CompanySidebar({
         </div>
       </div>
 
-      {/* Bottom Buyer Organization Footer */}
-      <div className="p-3 border-t border-[#e2e6e1]">
+      {/* Frosted Glass Bottom Buyer Footer over Illustrated Kerala Fields */}
+      <div className="p-3">
         <Link
           to="/company/settings"
-          className="flex items-center justify-between gap-2.5 px-2.5 py-2 rounded-xl hover:bg-slate-100 transition-colors group"
+          className="flex items-center justify-between gap-2.5 px-2.5 py-2 rounded-xl bg-[#0c2914]/78 backdrop-blur-sm border border-white/15 hover:bg-[#0c2914]/92 transition-colors group"
         >
           <div className="flex items-center gap-2.5 min-w-0">
-            <span className="relative w-8 h-8 rounded-full bg-[#1e293b] text-white text-xs font-bold flex items-center justify-center shrink-0">
+            <span className="relative w-8 h-8 rounded-full bg-[#edf5e6] text-[#143e22] text-xs font-bold flex items-center justify-center shrink-0">
               {initials}
               <span
-                className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white"
+                className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-[#0c2914]"
                 title="Verified Corporate Buyer"
               />
             </span>
             <div className="min-w-0">
-              <p className="text-xs font-semibold text-slate-900 truncate">
+              <p className="text-xs font-semibold text-white truncate">
                 {companyProfile.shortName}
               </p>
-              <p className="text-[10.5px] text-slate-500 truncate">
+              <p className="text-[10.5px] text-emerald-100/75 truncate">
                 {companyProfile.headquarters}
               </p>
             </div>
           </div>
 
           <svg
-            className="w-4 h-4 text-slate-400 group-hover:text-slate-700 shrink-0 transition-colors"
+            className="w-4 h-4 text-emerald-200/70 group-hover:text-white shrink-0 transition-colors"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"

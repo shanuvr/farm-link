@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PaymentGatewayModal from '../components/PaymentGatewayModal'
 import { useCompany } from '../context/companyContextStore'
 import { formatINR } from '../farmers/farmerData'
 import ProduceThumb from '../farmers/ProduceThumb'
@@ -71,49 +72,31 @@ function needsAfterCollectionSettlement(order) {
 
 function OrderActionPanel({
   order,
-  onAdvancePayment,
+  onOpenGateway,
   onScheduleCollection,
   onRecordWeight,
-  onSettlePayment,
 }) {
   const [scheduleExpanded, setScheduleExpanded] = useState(false)
-  const [paymentRef, setPaymentRef] = useState('')
   const [pickupDate, setPickupDate] = useState('2026-11-12')
   const [timeSlot, setTimeSlot] = useState(TIME_SLOTS[0])
   const [agent, setAgent] = useState('Suresh Kumar')
   const [vehicle, setVehicle] = useState('KL-07 CC 4821 · Pickup Van')
   const [weighedQty, setWeighedQty] = useState(String(order.agreedQuantity || ''))
-  const [settlementRef, setSettlementRef] = useState('')
 
   if (needsAdvancePayment(order)) {
     return (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          onAdvancePayment(order.id, paymentRef)
-          setPaymentRef('')
-        }}
-        className="pt-3 border-t border-slate-100 space-y-2"
-      >
-        <p className="text-[11.5px] font-semibold text-rose-700">
-          Advance payment due ({formatINR(order.totalAmount)}) before scheduling pickup
-        </p>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <input
-            type="text"
-            value={paymentRef}
-            onChange={(e) => setPaymentRef(e.target.value)}
-            placeholder="UPI / NEFT Ref (auto if blank)"
-            className="flex-1 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-slate-500"
-          />
-          <button
-            type="submit"
-            className="px-3.5 py-1.5 rounded-xl bg-[#184828] hover:bg-[#12391f] text-white text-xs font-semibold shrink-0 cursor-pointer transition-colors"
-          >
-            Confirm Payment
-          </button>
-        </div>
-      </form>
+      <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+        <span className="text-[11.5px] font-semibold text-rose-700">
+          Advance payment due before pickup scheduling
+        </span>
+        <button
+          type="button"
+          onClick={() => onOpenGateway(order, 'advance')}
+          className="px-3.5 py-1.5 rounded-xl bg-[#184828] hover:bg-[#12391f] text-white text-xs font-semibold shrink-0 cursor-pointer transition-colors"
+        >
+          Pay Now ({formatINR(order.totalAmount)})
+        </button>
+      </div>
     )
   }
 
@@ -261,34 +244,18 @@ function OrderActionPanel({
 
   if (needsAfterCollectionSettlement(order)) {
     return (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          onSettlePayment(order.id, settlementRef)
-          setSettlementRef('')
-        }}
-        className="pt-3 border-t border-slate-100 space-y-2"
-      >
-        <p className="text-[11.5px] font-semibold text-amber-800">
-          Weighed {order.weighedQuantity ?? order.agreedQuantity} {order.unit} · Settlement due:{' '}
-          {formatINR(order.totalAmount)}
-        </p>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <input
-            type="text"
-            value={settlementRef}
-            onChange={(e) => setSettlementRef(e.target.value)}
-            placeholder="NEFT / Bank Ref (auto if blank)"
-            className="flex-1 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-slate-500"
-          />
-          <button
-            type="submit"
-            className="px-3.5 py-1.5 rounded-xl bg-[#184828] hover:bg-[#12391f] text-white text-xs font-semibold shrink-0 cursor-pointer transition-colors"
-          >
-            Settle Payment
-          </button>
-        </div>
-      </form>
+      <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+        <span className="text-[11.5px] font-semibold text-amber-800">
+          Weighed {order.weighedQuantity ?? order.agreedQuantity} {order.unit} · Final invoice due
+        </span>
+        <button
+          type="button"
+          onClick={() => onOpenGateway(order, 'settlement')}
+          className="px-3.5 py-1.5 rounded-xl bg-[#184828] hover:bg-[#12391f] text-white text-xs font-semibold shrink-0 cursor-pointer transition-colors"
+        >
+          Pay &amp; Settle ({formatINR(order.totalAmount)})
+        </button>
+      </div>
     )
   }
 
@@ -308,6 +275,7 @@ export default function CompanyOrders() {
   } = useCompany()
 
   const [tab, setTab] = useState('active')
+  const [payingTarget, setPayingTarget] = useState(null) // { order, mode: 'advance' | 'settlement' }
 
   const counts = {
     active: allOrders.filter((o) => o.status !== 'Completed').length,
@@ -482,15 +450,32 @@ export default function CompanyOrders() {
 
                 <OrderActionPanel
                   order={order}
-                  onAdvancePayment={recordAdvancePayment}
+                  onOpenGateway={(targetOrder, mode) => setPayingTarget({ order: targetOrder, mode })}
                   onScheduleCollection={scheduleCollection}
                   onRecordWeight={recordCollectionWeight}
-                  onSettlePayment={completeAfterCollectionPayment}
                 />
               </article>
             )
           })}
         </div>
+      )}
+
+      {payingTarget && (
+        <PaymentGatewayModal
+          amount={payingTarget.order.totalAmount}
+          recipientName={payingTarget.order.farmerName}
+          recipientPayout={payingTarget.order.farmerPayout}
+          itemSummary={`${payingTarget.order.orderRef} · ${payingTarget.order.productName}`}
+          onClose={() => setPayingTarget(null)}
+          onSuccess={(tx) => {
+            if (payingTarget.mode === 'advance') {
+              recordAdvancePayment(payingTarget.order.id, tx.transactionRef)
+            } else {
+              completeAfterCollectionPayment(payingTarget.order.id, tx.transactionRef)
+            }
+            setPayingTarget(null)
+          }}
+        />
       )}
     </div>
   )

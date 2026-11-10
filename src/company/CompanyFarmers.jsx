@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCompany } from '../context/companyContextStore'
+import { getPayoutDestinationInfo } from '../farmers/farmerData'
 import { KERALA_DISTRICTS } from './companyData'
 
 /**
@@ -20,7 +21,7 @@ export default function CompanyFarmers() {
       return false
     }
     if (q) {
-      const hay = `${f.name} ${f.district} ${f.village} ${f.farmSize}`.toLowerCase()
+      const hay = `${f.name} ${f.district} ${f.village} ${f.farmSize} ${f.payoutDetails?.upiId || ''} ${f.payoutDetails?.bankName || ''}`.toLowerCase()
       if (!hay.includes(q)) return false
     }
     return true
@@ -76,6 +77,7 @@ export default function CompanyFarmers() {
               .slice(0, 2)
               .map((w) => w[0]?.toUpperCase() || '')
               .join('')
+            const payoutInfo = getPayoutDestinationInfo(farmer.payoutDetails)
 
             return (
               <article
@@ -129,6 +131,22 @@ export default function CompanyFarmers() {
                       {farmer.suppliedVolume} kg
                     </p>
                   </div>
+                </div>
+
+                <div className="rounded-xl bg-[#f8faf8] border border-[#e5e9e4] px-3 py-2 flex items-center justify-between gap-2 text-xs">
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                      Payout · {payoutInfo.mode}
+                    </p>
+                    <p className="font-mono text-[11.5px] font-semibold text-[#143e22] truncate mt-0.5">
+                      {payoutInfo.primaryValue}
+                    </p>
+                  </div>
+                  {payoutInfo.secondaryValue && (
+                    <span className="text-[11px] text-slate-500 truncate max-w-[44%] text-right">
+                      {payoutInfo.secondaryValue}
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-100 text-xs">

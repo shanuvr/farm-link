@@ -7,7 +7,9 @@ export const KERALA_CROPS = [
   { name: 'Yardlong Beans (Payar)', unit: 'kg', suggestedPrice: 60, defaultImages: ['/crops/beans-1.jpg'] },
   { name: 'Okra (Vendakka)', unit: 'kg', suggestedPrice: 42, defaultImages: ['/crops/okra-1.jpg'] },
   { name: 'Bitter Gourd (Pavakka)', unit: 'kg', suggestedPrice: 55, defaultImages: ['/crops/bittergourd-1.jpg'] },
-  { name: 'Snake Gourd (Padavalanga)', unit: 'kg', suggestedPrice: 34, defaultImages: [] },
+  { name: 'Snake Gourd (Padavalanga)', unit: 'kg', suggestedPrice: 34, defaultImages: ['/crops/snakegourd-1.jpg'] },
+  { name: 'Ash Gourd (Kumbalanga)', unit: 'kg', suggestedPrice: 24, defaultImages: ['/crops/ashgourd-1.jpg'] },
+  { name: 'Tapioca (Kappa)', unit: 'kg', suggestedPrice: 28, defaultImages: ['/crops/tapioca-1.jpg'] },
   { name: 'Fresh Farm Ginger', unit: 'kg', suggestedPrice: 110, defaultImages: ['/crops/ginger-1.jpg'] },
 ]
 
@@ -18,6 +20,9 @@ const CROP_PHOTO_KEYWORDS = [
   { match: ['bean', 'payar'], images: ['/crops/beans-1.jpg'] },
   { match: ['okra', 'vendakka'], images: ['/crops/okra-1.jpg'] },
   { match: ['bitter', 'pavakka'], images: ['/crops/bittergourd-1.jpg'] },
+  { match: ['snake', 'padavalanga'], images: ['/crops/snakegourd-1.jpg'] },
+  { match: ['ash', 'kumbalanga'], images: ['/crops/ashgourd-1.jpg'] },
+  { match: ['tapioca', 'kappa', 'cassava'], images: ['/crops/tapioca-1.jpg'] },
   { match: ['ginger'], images: ['/crops/ginger-1.jpg'] },
 ]
 
@@ -53,6 +58,15 @@ export function formatINR(value) {
   }).format(Number(value) || 0)
 }
 
+export const DEFAULT_FARMER_PAYOUT = {
+  preferredMethod: 'UPI',
+  upiId: 'rajannair.ollur@okaxis',
+  accountHolder: 'Rajan Nair',
+  bankName: 'Kerala Gramin Bank, Ollur',
+  accountNumber: '402188901142',
+  ifscCode: 'KLGB0040218',
+}
+
 export const INITIAL_FARMER_DATA = {
   profile: {
     name: 'Rajan Nair',
@@ -62,6 +76,7 @@ export const INITIAL_FARMER_DATA = {
     village: 'Ollur Agro Cluster',
     verified: true,
     farmSize: '3.2 Acres · Vegetable Cultivation',
+    payoutDetails: { ...DEFAULT_FARMER_PAYOUT },
   },
   listings: [
     {
@@ -347,5 +362,117 @@ export const INITIAL_FARMER_DATA = {
       link: '/farmers/orders',
     },
   ],
+}
+
+/**
+ * Trigger browser CSV download for Farmer Portal confirmed sales & payout report.
+ */
+export function exportFarmerSalesCsv(orders) {
+  const headers = [
+    'Order Ref',
+    'Company Buyer',
+    'Product',
+    'Agreed Qty',
+    'Weighed Qty',
+    'Unit',
+    'Agreed Rate (INR)',
+    'Total Amount (INR)',
+    'Payment Arrangement',
+    'Payment Status',
+    'Order Status',
+  ]
+  const escape = (val) => `"${String(val ?? '').replaceAll('"', '""')}"`
+  const rows = orders.map((o) => [
+    o.orderRef,
+    o.companyName,
+    o.productName,
+    o.agreedQuantity,
+    o.weighedQuantity ?? o.agreedQuantity,
+    o.unit,
+    o.agreedPrice,
+    o.totalAmount,
+    o.paymentArrangement,
+    o.paymentStatus,
+    o.status,
+  ])
+  const csv = [headers, ...rows].map((r) => r.map(escape).join(',')).join('\n')
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = `farmlink-farmer-sales-${new Date().toISOString().slice(0, 10)}.csv`
+  link.click()
+  URL.revokeObjectURL(url)
+}
+
+/**
+ * Merges saved farmer payout details with defaults so cached sessions stay valid.
+ */
+export function normalizePayoutDetails(payoutDetails, fallback = DEFAULT_FARMER_PAYOUT) {
+  if (!payoutDetails) return { ...fallback }
+  const preferredMethod =
+    payoutDetails.preferredMethod === 'Bank Transfer' || payoutDetails.preferredMethod === 'UPI'
+      ? payoutDetails.preferredMethod
+      : fallback.preferredMethod || 'UPI'
+
+  return {
+    preferredMethod,
+    upiId: payoutDetails.upiId ?? fallback.upiId ?? '',
+    accountHolder: payoutDetails.accountHolder ?? fallback.accountHolder ?? '',
+    bankName: payoutDetails.bankName ?? fallback.bankName ?? '',
+    accountNumber: payoutDetails.accountNumber ?? fallback.accountNumber ?? '',
+    ifscCode: (payoutDetails.ifscCode ?? fallback.ifscCode ?? '').toUpperCase(),
+  }
+}
+
+/**
+ * Masks all but the final 4 digits of a bank account number for secure display.
+ */
+export function formatMaskedAccount(accountNumber) {
+  const digits = String(accountNumber || '').replace(/\s+/g, '')
+  if (!digits) return ''
+  if (digits.length <= 4) return digits
+  return `•••• ${digits.slice(-4)}`
+}
+
+/**
+ * Summarizes a farmer's preferred payout destination for company cards and payment modals.
+ */
+export function getPayoutDestinationInfo(payoutDetails) {
+  const upiId = payoutDetails?.upiId?.trim() || ''
+  const accountNumber = payoutDetails?.accountNumber?.trim() || ''
+  const ifscCode = payoutDetails?.ifscCode?.trim().toUpperCase() || ''
+  const bankName = payoutDetails?.bankName?.trim() || ''
+  const accountHolder = payoutDetails?.accountHolder?.trim() || ''
+  const preferBank = payoutDetails?.preferredMethod === 'Bank Transfer'
+
+  if ((preferBank && accountNumber) || (!upiId && accountNumber)) {
+    const masked = formatMaskedAccount(accountNumber)
+    return {
+      mode: 'Bank Transfer',
+      shortLabel: `Bank ${masked}${ifscCode ? ` · ${ifscCode}` : ''}`,
+      primaryValue: `${masked}${ifscCode ? ` · ${ifscCode}` : ''}`,
+      secondaryValue: [bankName, accountHolder].filter(Boolean).join(' · '),
+    }
+  }
+
+  if (upiId) {
+    const bankHint = accountNumber
+      ? [bankName, `(${formatMaskedAccount(accountNumber)})`].filter(Boolean).join(' ')
+      : bankName
+    return {
+      mode: 'UPI',
+      shortLabel: `UPI: ${upiId}`,
+      primaryValue: upiId,
+      secondaryValue: bankHint,
+    }
+  }
+
+  return {
+    mode: 'Pending',
+    shortLabel: 'Payout details pending',
+    primaryValue: 'Payout account not added yet',
+    secondaryValue: '',
+  }
 }
 

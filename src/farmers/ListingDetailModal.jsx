@@ -52,14 +52,14 @@ export default function ListingDetailModal({
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/50 backdrop-blur-xs"
+      className="fixed inset-0 z-[60] flex items-center justify-center p-2.5 sm:p-4 bg-black/50 backdrop-blur-xs"
       role="dialog"
       aria-modal="true"
       aria-labelledby="listing-modal-title"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-lg bg-white border border-slate-200 rounded-t-3xl sm:rounded-3xl shadow-2xl max-h-[90dvh] overflow-y-auto no-scrollbar"
+        className="w-full max-w-lg bg-white border border-slate-200 rounded-2xl sm:rounded-3xl shadow-2xl max-h-[88dvh] overflow-y-auto overscroll-contain no-scrollbar"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Photo Slider */}

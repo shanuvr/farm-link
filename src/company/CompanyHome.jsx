@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import AcceptOfferModal from '../components/AcceptOfferModal'
 import ListingPhotoSlider from '../components/ListingPhotoSlider'
 import { useCompany } from '../context/companyContextStore'
 import { formatINR, getListingImages } from '../farmers/farmerData'
@@ -21,6 +22,7 @@ export default function CompanyHome() {
   } = useCompany()
 
   const [selectedListingId, setSelectedListingId] = useState(null)
+  const [acceptingOffer, setAcceptingOffer] = useState(null)
 
   const activeBatches = allListings.filter(
     (l) => l.status !== 'paused' && (l.quantity || 0) - (l.reservedQuantity || 0) > 0
@@ -157,7 +159,7 @@ export default function CompanyHome() {
                   <div className="flex items-center gap-1.5 shrink-0">
                     <button
                       type="button"
-                      onClick={() => acceptFarmerCounter(offer.id)}
+                      onClick={() => setAcceptingOffer(offer)}
                       className="px-3 py-1.5 rounded-lg bg-[#184828] hover:bg-[#12391f] text-white text-xs font-semibold cursor-pointer"
                     >
                       Accept ₹{offer.offeredPrice}
@@ -280,6 +282,19 @@ export default function CompanyHome() {
           initialPaymentMode={companyProfile.defaultPaymentMode}
           onClose={() => setSelectedListingId(null)}
           onSubmitOffer={sendCompanyOffer}
+        />
+      )}
+
+      {acceptingOffer && (
+        <AcceptOfferModal
+          key={acceptingOffer.id}
+          offer={acceptingOffer}
+          role="company"
+          onClose={() => setAcceptingOffer(null)}
+          onConfirm={(options) => {
+            acceptFarmerCounter(acceptingOffer.id, options)
+            setAcceptingOffer(null)
+          }}
         />
       )}
     </div>

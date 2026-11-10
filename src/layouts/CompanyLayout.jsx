@@ -79,8 +79,8 @@ export default function CompanyLayout() {
       />
 
       <div className="flex-1 min-w-0 flex flex-col">
-        {/* Top Utility Bar (aligned at h-14 with sidebar header) */}
-        <header className="sticky top-0 z-30 h-14 bg-white/90 backdrop-blur-md border-b border-[#e2e6e1] px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
+        {/* Top Utility Bar matching reference layout */}
+        <header className="sticky top-0 z-30 h-14 bg-white/95 backdrop-blur-md border-b border-[#e2e6e1] px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
             <Link to="/company/dashboard" className="lg:hidden flex items-center gap-2 shrink-0">
               <FarmLinkLogoMark className="w-7 h-7" />
@@ -89,17 +89,18 @@ export default function CompanyLayout() {
               </span>
             </Link>
 
-            <div className="hidden lg:flex items-center gap-2 text-xs text-slate-500">
-              <span className="font-semibold text-slate-900">{activeRoute.label}</span>
-              <span className="text-slate-300">·</span>
-              <span className="inline-flex items-center gap-1.5 text-emerald-700 font-medium">
+            <div className="hidden lg:flex items-center gap-2.5">
+              <h2 className="font-serif text-lg font-bold text-slate-900 tracking-tight">
+                {activeRoute.label}
+              </h2>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-[#184828] text-[11px] font-semibold">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                 Verified Buyer
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {location.pathname !== '/company/browse' && (
               <Link
                 to="/company/browse"
@@ -180,6 +181,19 @@ export default function CompanyLayout() {
                 </div>
               )}
             </div>
+
+            {/* Desktop Buyer Account Shortcut (mirrors top-right org badge in reference) */}
+            <Link
+              to="/company/settings"
+              className="hidden lg:inline-flex items-center gap-2 pl-2 pr-3 py-1 rounded-full border border-slate-200 bg-white hover:bg-slate-50 transition-colors"
+            >
+              <span className="w-6.5 h-6.5 rounded-full bg-[#184828] text-white text-[10px] font-bold flex items-center justify-center">
+                {initials}
+              </span>
+              <span className="text-xs font-semibold text-slate-800">
+                {companyProfile.shortName}
+              </span>
+            </Link>
 
             {/* Mobile Overflow Menu for Farmers, Reports & Company Settings */}
             <div className="relative lg:hidden" ref={moreRef}>

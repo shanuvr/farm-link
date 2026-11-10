@@ -57,18 +57,37 @@ export function ProfileIcon({ className = 'w-5 h-5' }) {
   )
 }
 
-export function FarmLinkLogoMark({ className = 'w-8 h-8' }) {
+export function ReportsIcon({ className = 'w-5 h-5' }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="18" y1="20" x2="18" y2="10" />
+      <line x1="12" y1="20" x2="12" y2="4" />
+      <line x1="6" y1="20" x2="6" y2="14" />
+    </svg>
+  )
+}
+
+export function FarmLinkLogoMark({ className = 'w-8 h-8', light = false }) {
+  const roofFill = light ? '#edf5e6' : '#1b4d29'
+  const roofStroke = light ? '#d7ebc8' : '#12381e'
+  const trimStroke = light ? '#6ec468' : '#9cc594'
+  const pillarFill = light ? '#143e22' : '#12381e'
+  const wavePrimary = light ? '#a8df89' : '#1b4d29'
+  const waveSecondary = light ? '#77c765' : '#2d6d3d'
+  const sproutRight = light ? '#a8df89' : '#5aa866'
+  const sproutLeft = light ? '#84cf71' : '#478a53'
+
   return (
     <svg viewBox="0 0 72 62" className={`${className} shrink-0`} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 28L36 15L52 28H20Z" fill="#1b4d29" stroke="#12381e" strokeWidth="1.8" strokeLinejoin="round" />
-      <path d="M22 25.5L36 14.5L50 25.5" stroke="#9cc594" strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="25" y="28" width="3" height="11" fill="#12381e" rx="0.5" />
-      <rect x="34.5" y="28" width="3" height="11" fill="#12381e" rx="0.5" />
-      <rect x="44" y="28" width="3" height="11" fill="#12381e" rx="0.5" />
-      <path d="M4 42C18 36 38 35 68 39" stroke="#1b4d29" strokeWidth="3.6" strokeLinecap="round" />
-      <path d="M9 48C24 42 44 41 63 46" stroke="#2d6d3d" strokeWidth="3.2" strokeLinecap="round" />
-      <path d="M36 14C36 10 39 8 42 8C42 10 40 12.5 36 14Z" fill="#5aa866" />
-      <path d="M36 14C35 10 33 9 30 9C30 11 32 13 36 14Z" fill="#478a53" />
+      <path d="M20 28L36 15L52 28H20Z" fill={roofFill} stroke={roofStroke} strokeWidth="1.8" strokeLinejoin="round" />
+      <path d="M22 25.5L36 14.5L50 25.5" stroke={trimStroke} strokeWidth="1.5" strokeLinecap="round" />
+      <rect x="25" y="28" width="3" height="11" fill={pillarFill} rx="0.5" />
+      <rect x="34.5" y="28" width="3" height="11" fill={pillarFill} rx="0.5" />
+      <rect x="44" y="28" width="3" height="11" fill={pillarFill} rx="0.5" />
+      <path d="M4 42C18 36 38 35 68 39" stroke={wavePrimary} strokeWidth="3.6" strokeLinecap="round" />
+      <path d="M9 48C24 42 44 41 63 46" stroke={waveSecondary} strokeWidth="3.2" strokeLinecap="round" />
+      <path d="M36 14C36 10 39 8 42 8C42 10 40 12.5 36 14Z" fill={sproutRight} />
+      <path d="M36 14C35 10 33 9 30 9C30 11 32 13 36 14Z" fill={sproutLeft} />
     </svg>
   )
 }

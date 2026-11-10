@@ -18,6 +18,7 @@ import AddListing from './farmers/AddListing'
 import FarmerOffers from './farmers/FarmerOffers'
 import FarmerOrders from './farmers/FarmerOrders'
 import FarmerProfile from './farmers/FarmerProfile'
+import FarmerReports from './farmers/FarmerReports'
 import CompanyBrowse from './company/CompanyBrowse'
 import CompanyFarmers from './company/CompanyFarmers'
 import CompanyHome from './company/CompanyHome'
@@ -72,6 +73,7 @@ function App() {
           <Route path="add" element={<AddListing />} />
           <Route path="offers" element={<FarmerOffers />} />
           <Route path="orders" element={<FarmerOrders />} />
+          <Route path="reports" element={<FarmerReports />} />
           <Route path="profile" element={<FarmerProfile />} />
         </Route>
         </Routes>

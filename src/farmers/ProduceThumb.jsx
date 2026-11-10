@@ -7,6 +7,7 @@ const CROP_STYLES = [
   { match: 'bean', bg: 'bg-[#e7f4e4]', border: 'border-[#c8e4c1]', text: 'text-[#184828]', short: 'YB' },
   { match: 'okra', bg: 'bg-[#e7f4e4]', border: 'border-[#c8e4c1]', text: 'text-[#2c6e43]', short: 'OK' },
   { match: 'gourd', bg: 'bg-[#eaf5e9]', border: 'border-[#cce4c9]', text: 'text-[#1e5631]', short: 'GD' },
+  { match: 'tapioca', bg: 'bg-[#f6eee2]', border: 'border-[#e6d5bd]', text: 'text-[#6e4720]', short: 'TP' },
   { match: 'ginger', bg: 'bg-[#faeedf]', border: 'border-[#edd3b4]', text: 'text-[#8c4a19]', short: 'GN' },
 ]
 

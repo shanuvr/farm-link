@@ -1,8 +1,38 @@
-export const COMPANY_STORAGE_KEY = 'farmlink_company_portal_v1'
+export const COMPANY_STORAGE_KEY = 'farmlink_company_portal_v2'
 
-export const KERALA_DISTRICTS = ['All Districts', 'Thrissur', 'Palakkad', 'Wayanad', 'Kozhikode']
+export const KERALA_DISTRICTS = [
+  'All Districts',
+  'Thrissur',
+  'Palakkad',
+  'Wayanad',
+  'Kozhikode',
+  'Ernakulam',
+  'Idukki',
+]
 
 export const PAYMENT_MODES = ['Payment Before Collection', 'Payment After Collection']
+
+export const PRODUCE_CATEGORIES = [
+  'All Products',
+  'Vegetables',
+  'Fruits',
+  'Grains',
+  'Spices',
+  'Others',
+]
+
+/**
+ * Derive produce category consistently across live FarmerContext and partner batches.
+ */
+export function getListingCategory(item) {
+  if (item?.category) return item.category
+  const name = (item?.productName || '').toLowerCase()
+  if (/(banana|nendran|mango|pineapple|jackfruit|papaya|fruit)/.test(name)) return 'Fruits'
+  if (/(ginger|pepper|cardamom|turmeric|chilli|spice)/.test(name)) return 'Spices'
+  if (/(rice|paddy|matta|wheat|millet|ragi|grain|pulse)/.test(name)) return 'Grains'
+  if (/(tapioca|kappa|yam|chena|taro|chembu|tuber)/.test(name)) return 'Others'
+  return 'Vegetables'
+}
 
 export const INITIAL_COMPANY_DATA = {
   isAuthenticated: false,
@@ -25,6 +55,14 @@ export const INITIAL_COMPANY_DATA = {
       phone: '+91 94472 19034',
       farmSize: '4.5 Acres · Irrigated Vegetable Farm',
       verified: true,
+      payoutDetails: {
+        preferredMethod: 'UPI',
+        upiId: 'lakshmidevi.chittur@okaxis',
+        accountHolder: 'Lakshmi Devi',
+        bankName: 'State Bank of India, Chittur',
+        accountNumber: '310944821760',
+        ifscCode: 'SBIN0008612',
+      },
     },
     {
       id: 'frm-103',
@@ -34,6 +72,14 @@ export const INITIAL_COMPANY_DATA = {
       phone: '+91 98951 77410',
       farmSize: '5.0 Acres · Spice & Highland Crops',
       verified: true,
+      payoutDetails: {
+        preferredMethod: 'Bank Transfer',
+        upiId: 'mathewjoseph.wynd@okicici',
+        accountHolder: 'Mathew Joseph',
+        bankName: 'Federal Bank, Sulthan Bathery',
+        accountNumber: '14020100394821',
+        ifscCode: 'FDRL0001402',
+      },
     },
     {
       id: 'frm-104',
@@ -43,6 +89,65 @@ export const INITIAL_COMPANY_DATA = {
       phone: '+91 97450 61288',
       farmSize: '2.8 Acres · Organic Kitchen Greens',
       verified: true,
+      payoutDetails: {
+        preferredMethod: 'UPI',
+        upiId: 'fathima.koyilandy@ybl',
+        accountHolder: 'Fathima Beevi',
+        bankName: 'Canara Bank, Koyilandy',
+        accountNumber: '0841101029384',
+        ifscCode: 'CNRB0000841',
+      },
+    },
+    {
+      id: 'frm-105',
+      name: 'Paulose Kurian',
+      district: 'Ernakulam, Kerala',
+      village: 'Perumbavoor Agro Belt',
+      phone: '+91 94463 88219',
+      farmSize: '6.2 Acres · Tubers & Cucurbits',
+      verified: true,
+      payoutDetails: {
+        preferredMethod: 'Bank Transfer',
+        upiId: 'paulosekurian.ekm@okhdfcbank',
+        accountHolder: 'Paulose Kurian',
+        bankName: 'South Indian Bank, Perumbavoor',
+        accountNumber: '0214053000019284',
+        ifscCode: 'SIBL0000214',
+      },
+    },
+    {
+      id: 'frm-106',
+      name: 'Sreelatha Nair',
+      district: 'Idukki, Kerala',
+      village: 'Thodupuzha Foothills',
+      phone: '+91 98461 44092',
+      farmSize: '4.0 Acres · Spice & Tuber Cultivation',
+      verified: true,
+      payoutDetails: {
+        preferredMethod: 'UPI',
+        upiId: 'sreelatha.tdpa@okaxis',
+        accountHolder: 'Sreelatha Nair',
+        bankName: 'Kerala Gramin Bank, Thodupuzha',
+        accountNumber: '403109224108',
+        ifscCode: 'KLGB0040310',
+      },
+    },
+    {
+      id: 'frm-107',
+      name: 'Harikrishnan P.',
+      district: 'Palakkad, Kerala',
+      village: 'Kollengode Green Cluster',
+      phone: '+91 94952 31077',
+      farmSize: '5.5 Acres · Wholesale Field Vegetables',
+      verified: true,
+      payoutDetails: {
+        preferredMethod: 'UPI',
+        upiId: 'harikrishnan.kollengode@okicici',
+        accountHolder: 'Harikrishnan P.',
+        bankName: 'Federal Bank, Kollengode',
+        accountNumber: '11890100284710',
+        ifscCode: 'FDRL0001189',
+      },
     },
   ],
   partnerListings: [
@@ -106,6 +211,166 @@ export const INITIAL_COMPANY_DATA = {
       status: 'active',
       companyViewed: { viewed: true, viewedAt: 'Yesterday' },
     },
+    {
+      id: 'clst-504',
+      farmerId: 'frm-102',
+      farmerName: 'Lakshmi Devi',
+      farmerPhone: '+91 94472 19034',
+      productName: 'Snake Gourd (Padavalanga)',
+      type: 'Ready Stock',
+      quantity: 180,
+      reservedQuantity: 0,
+      unit: 'kg',
+      askingPrice: 32,
+      grade: 'Grade A (Premium)',
+      harvestDate: '2026-11-10',
+      availableFrom: '2026-11-10',
+      location: 'Chittur, Palakkad',
+      notes: 'Uniform 90cm pale-green striped gourds harvested under bamboo pandal.',
+      images: ['/crops/snakegourd-1.jpg'],
+      status: 'active',
+      companyViewed: { viewed: false, viewedAt: null },
+    },
+    {
+      id: 'clst-505',
+      farmerId: 'frm-107',
+      farmerName: 'Harikrishnan P.',
+      farmerPhone: '+91 94952 31077',
+      productName: 'Country Red Tomatoes',
+      type: 'Ready Stock',
+      quantity: 300,
+      reservedQuantity: 40,
+      unit: 'kg',
+      askingPrice: 44,
+      grade: 'Grade B (Standard)',
+      harvestDate: '2026-11-09',
+      availableFrom: '2026-11-10',
+      location: 'Kollengode, Palakkad',
+      notes: 'High-volume field harvest ready for wholesale dispatch in plastic crates.',
+      images: ['/crops/tomatoes-2.jpg', '/crops/tomatoes-1.jpg'],
+      status: 'active',
+      companyViewed: { viewed: true, viewedAt: '1 hour ago' },
+    },
+    {
+      id: 'clst-506',
+      farmerId: 'frm-103',
+      farmerName: 'Mathew Joseph',
+      farmerPhone: '+91 98951 77410',
+      productName: 'Nendran Banana',
+      type: 'Upcoming Harvest',
+      quantity: 320,
+      reservedQuantity: 0,
+      unit: 'kg',
+      askingPrice: 51,
+      grade: 'Grade A (Premium)',
+      harvestDate: '2026-11-14',
+      availableFrom: '2026-11-14',
+      location: 'Sulthan Bathery, Wayanad',
+      notes: 'Highland rain-fed Nendran bunches, ideal size and starch content.',
+      images: ['/crops/banana-2.jpg', '/crops/banana-1.jpg'],
+      status: 'active',
+      companyViewed: { viewed: false, viewedAt: null },
+    },
+    {
+      id: 'clst-507',
+      farmerId: 'frm-104',
+      farmerName: 'Fathima Beevi',
+      farmerPhone: '+91 97450 61288',
+      productName: 'Violet Brinjal',
+      type: 'Ready Stock',
+      quantity: 110,
+      reservedQuantity: 0,
+      unit: 'kg',
+      askingPrice: 38,
+      grade: 'Organic / Farm Fresh',
+      harvestDate: '2026-11-10',
+      availableFrom: '2026-11-10',
+      location: 'Koyilandy, Kozhikode',
+      notes: 'Glossy pesticide-free violet brinjals packed in ventilated baskets.',
+      images: ['/crops/brinjal-1.jpg'],
+      status: 'active',
+      companyViewed: { viewed: false, viewedAt: null },
+    },
+    {
+      id: 'clst-508',
+      farmerId: 'frm-105',
+      farmerName: 'Paulose Kurian',
+      farmerPhone: '+91 94463 88219',
+      productName: 'Tapioca (Kappa)',
+      type: 'Ready Stock',
+      quantity: 450,
+      reservedQuantity: 0,
+      unit: 'kg',
+      askingPrice: 28,
+      grade: 'Grade A (Premium)',
+      harvestDate: '2026-11-09',
+      availableFrom: '2026-11-10',
+      location: 'Perumbavoor, Ernakulam',
+      notes: 'Cleanly trimmed soft-boiling sweet variety cassava tubers.',
+      images: ['/crops/tapioca-1.jpg'],
+      status: 'active',
+      companyViewed: { viewed: true, viewedAt: '4 hours ago' },
+    },
+    {
+      id: 'clst-509',
+      farmerId: 'frm-105',
+      farmerName: 'Paulose Kurian',
+      farmerPhone: '+91 94463 88219',
+      productName: 'Ash Gourd (Kumbalanga)',
+      type: 'Ready Stock',
+      quantity: 220,
+      reservedQuantity: 0,
+      unit: 'kg',
+      askingPrice: 24,
+      grade: 'Grade A (Premium)',
+      harvestDate: '2026-11-08',
+      availableFrom: '2026-11-09',
+      location: 'Perumbavoor, Ernakulam',
+      notes: 'Thick-fleshed waxy winter melons suitable for wholesale cold storage.',
+      images: ['/crops/ashgourd-1.jpg'],
+      status: 'active',
+      companyViewed: { viewed: false, viewedAt: null },
+    },
+    {
+      id: 'clst-510',
+      farmerId: 'frm-106',
+      farmerName: 'Sreelatha Nair',
+      farmerPhone: '+91 98461 44092',
+      productName: 'Fresh Farm Ginger',
+      type: 'Upcoming Harvest',
+      quantity: 160,
+      reservedQuantity: 0,
+      unit: 'kg',
+      askingPrice: 108,
+      grade: 'Organic / Farm Fresh',
+      harvestDate: '2026-11-15',
+      availableFrom: '2026-11-15',
+      location: 'Thodupuzha, Idukki',
+      notes: 'Aromatic Idukki hill ginger harvested strictly on pre-order.',
+      images: ['/crops/ginger-1.jpg'],
+      status: 'active',
+      companyViewed: { viewed: false, viewedAt: null },
+    },
+    {
+      id: 'clst-511',
+      farmerId: 'frm-107',
+      farmerName: 'Harikrishnan P.',
+      farmerPhone: '+91 94952 31077',
+      productName: 'Yardlong Beans (Payar)',
+      type: 'Ready Stock',
+      quantity: 130,
+      reservedQuantity: 0,
+      unit: 'kg',
+      askingPrice: 58,
+      grade: 'Grade A (Premium)',
+      harvestDate: '2026-11-10',
+      availableFrom: '2026-11-10',
+      location: 'Kollengode, Palakkad',
+      notes: 'Crisp dark-green string beans bundled fresh every morning.',
+      images: ['/crops/beans-1.jpg'],
+      status: 'active',
+      companyViewed: { viewed: false, viewedAt: null },
+    },
   ],
   partnerOffers: [
     {
@@ -138,6 +403,122 @@ export const INITIAL_COMPANY_DATA = {
           price: 106,
           quantity: 120,
           time: 'Today, 8:40 AM',
+        },
+      ],
+    },
+    {
+      id: 'coff-602',
+      listingId: 'clst-501',
+      farmerId: 'frm-102',
+      farmerName: 'Lakshmi Devi',
+      farmerLocation: 'Chittur, Palakkad',
+      productName: 'Okra (Vendakka)',
+      askingPrice: 42,
+      offeredPrice: 39,
+      quantity: 100,
+      unit: 'kg',
+      paymentPreference: 'Payment Before Collection',
+      status: 'countered_by_farmer',
+      expiresIn: 'Counteroffer received',
+      history: [
+        {
+          id: 'cr-3',
+          actor: 'company',
+          label: 'Initial Company Offer',
+          price: 37,
+          quantity: 100,
+          time: 'Yesterday, 5:10 PM',
+        },
+        {
+          id: 'cr-4',
+          actor: 'farmer',
+          label: 'Farmer Counteroffer',
+          price: 39,
+          quantity: 100,
+          time: 'Today, 9:15 AM',
+        },
+      ],
+    },
+    {
+      id: 'coff-603',
+      listingId: 'clst-503',
+      farmerId: 'frm-104',
+      farmerName: 'Fathima Beevi',
+      farmerLocation: 'Koyilandy, Kozhikode',
+      productName: 'Bitter Gourd (Pavakka)',
+      askingPrice: 56,
+      offeredPrice: 51,
+      quantity: 60,
+      unit: 'kg',
+      paymentPreference: 'Payment After Collection',
+      status: 'pending_farmer',
+      expiresIn: '18 hours left',
+      history: [
+        {
+          id: 'cr-5',
+          actor: 'company',
+          label: 'Initial Company Offer',
+          price: 51,
+          quantity: 60,
+          time: 'Today, 10:05 AM',
+        },
+      ],
+    },
+    {
+      id: 'coff-604',
+      listingId: 'clst-505',
+      farmerId: 'frm-107',
+      farmerName: 'Harikrishnan P.',
+      farmerLocation: 'Kollengode, Palakkad',
+      productName: 'Country Red Tomatoes',
+      askingPrice: 44,
+      offeredPrice: 41,
+      quantity: 150,
+      unit: 'kg',
+      paymentPreference: 'Payment Before Collection',
+      status: 'countered_by_farmer',
+      expiresIn: 'Counteroffer received',
+      history: [
+        {
+          id: 'cr-6',
+          actor: 'company',
+          label: 'Initial Company Offer',
+          price: 39,
+          quantity: 150,
+          time: 'Yesterday, 4:00 PM',
+        },
+        {
+          id: 'cr-7',
+          actor: 'farmer',
+          label: 'Farmer Counteroffer',
+          price: 41,
+          quantity: 150,
+          time: 'Today, 7:55 AM',
+        },
+      ],
+    },
+    {
+      id: 'coff-605',
+      listingId: 'clst-508',
+      farmerId: 'frm-105',
+      farmerName: 'Paulose Kurian',
+      farmerLocation: 'Perumbavoor, Ernakulam',
+      productName: 'Tapioca (Kappa)',
+      askingPrice: 28,
+      offeredPrice: 25,
+      quantity: 200,
+      unit: 'kg',
+      paymentPreference: 'Payment After Collection',
+      status: 'pending_farmer',
+      expiresIn: '20 hours left',
+      history: [
+        {
+          id: 'cr-8',
+          actor: 'company',
+          label: 'Initial Company Offer',
+          price: 25,
+          quantity: 200,
+          time: 'Today, 11:20 AM',
         },
       ],
     },
@@ -238,5 +619,40 @@ export function exportProcurementCsv(orders) {
   link.download = `farmlink-procurement-report-${new Date().toISOString().slice(0, 10)}.csv`
   link.click()
   URL.revokeObjectURL(url)
+}
+
+/**
+ * Compute price variance and savings pill styling relative to a farmer's asking price.
+ */
+export function getOfferSpread(offeredPrice, askingPrice) {
+  const offer = Number(offeredPrice) || 0
+  const ask = Number(askingPrice) || 0
+  if (!ask) {
+    return { diff: 0, pct: 0, text: 'At ask', cls: 'bg-slate-100 text-slate-600 border-slate-200' }
+  }
+  const diff = offer - ask
+  const pct = Math.round((diff / ask) * 100)
+  if (diff < 0) {
+    return {
+      diff,
+      pct,
+      text: `${pct}% vs ask`,
+      cls: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    }
+  }
+  if (diff === 0) {
+    return {
+      diff: 0,
+      pct: 0,
+      text: 'At ask',
+      cls: 'bg-slate-100 text-slate-600 border-slate-200',
+    }
+  }
+  return {
+    diff,
+    pct,
+    text: `+${pct}% vs ask`,
+    cls: 'bg-rose-50 text-rose-700 border-rose-200',
+  }
 }
 

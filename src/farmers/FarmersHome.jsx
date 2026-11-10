@@ -40,9 +40,9 @@ export default function FarmersHome() {
     {
       label: 'Verified Sales',
       value: formatINR(totalEarnings),
-      sub: 'Paid & settled',
-      to: '/farmers/orders',
-      dot: 'bg-[#5d281f]',
+      sub: 'View sales report →',
+      to: '/farmers/reports',
+      dot: 'bg-[#184828]',
     },
   ]
 

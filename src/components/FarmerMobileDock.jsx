@@ -13,7 +13,7 @@ import {
 export default function FarmerMobileDock({ pendingOffersCount, activeOrdersCount }) {
   return (
     <nav
-      className="lg:hidden fixed bottom-2.5 inset-x-3 z-50 max-w-md mx-auto"
+      className="lg:hidden fixed bottom-2.5 inset-x-3 z-40 max-w-md mx-auto"
       aria-label="Mobile farmer navigation"
     >
       <div className="bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl shadow-[0_10px_30px_rgba(15,23,42,0.12)] px-1.5 py-1.5 grid grid-cols-5 items-end">

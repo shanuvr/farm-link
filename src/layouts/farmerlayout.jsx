@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { FarmLinkLogoMark, PlusIcon } from '../components/FarmerIcons'
+import { FarmLinkLogoMark, PlusIcon, ReportsIcon } from '../components/FarmerIcons'
 import FarmerMobileDock from '../components/FarmerMobileDock'
 import FarmerSidebar from '../components/FarmerSidebar'
 import { useFarmer } from '../context/farmerContextStore'
@@ -10,6 +10,7 @@ const ROUTE_BREADCRUMBS = [
   { path: '/farmers/add', label: 'Add Listing' },
   { path: '/farmers/offers', label: 'Offers & Negotiation' },
   { path: '/farmers/orders', label: 'Confirmed Orders' },
+  { path: '/farmers/reports', label: 'Sales Reports' },
   { path: '/farmers/profile', label: 'Profile & Settings' },
   { path: '/farmers', label: 'Overview' },
 ]
@@ -79,6 +80,14 @@ export default function FarmerLayout() {
 
             {/* Right Actions */}
             <div className="flex items-center gap-2">
+              <Link
+                to="/farmers/reports"
+                aria-label="Sales reports"
+                className="lg:hidden p-2 rounded-xl border border-slate-200 bg-white text-[#143e22] hover:bg-slate-50 transition-colors"
+              >
+                <ReportsIcon className="w-4.5 h-4.5" />
+              </Link>
+
               <Link
                 to="/farmers/add"
                 className="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#184828] hover:bg-[#12391f] text-white text-xs font-semibold shadow-2xs transition-colors"

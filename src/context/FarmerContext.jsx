@@ -1,12 +1,24 @@
 import { useEffect, useState } from 'react'
-import { INITIAL_FARMER_DATA, STORAGE_KEY } from '../farmers/farmerData'
+import { INITIAL_FARMER_DATA, STORAGE_KEY, normalizePayoutDetails } from '../farmers/farmerData'
 import { FarmerContext } from './farmerContextStore'
+
+function normalizeFarmerState(raw) {
+  if (!raw || typeof raw !== 'object') return INITIAL_FARMER_DATA
+  return {
+    ...raw,
+    profile: {
+      ...INITIAL_FARMER_DATA.profile,
+      ...(raw.profile || {}),
+      payoutDetails: normalizePayoutDetails(raw.profile?.payoutDetails),
+    },
+  }
+}
 
 function loadInitialState() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY)
     if (saved) {
-      return JSON.parse(saved)
+      return normalizeFarmerState(JSON.parse(saved))
     }
   } catch {
     // Fall back to default demo state if storage is unavailable or malformed
@@ -32,7 +44,7 @@ export function FarmerProvider({ children }) {
     const onStorage = (e) => {
       if (e.key === STORAGE_KEY && e.newValue) {
         try {
-          setState(JSON.parse(e.newValue))
+          setState(normalizeFarmerState(JSON.parse(e.newValue)))
         } catch {
           // Ignore malformed external updates
         }
@@ -130,7 +142,7 @@ export function FarmerProvider({ children }) {
     }))
   }
 
-  const acceptOffer = (offerId) => {
+  const acceptOffer = (offerId, options = {}) => {
     setState((prev) => {
       const target = prev.offers.find((o) => o.id === offerId)
       if (!target || target.status === 'accepted') return prev
@@ -138,6 +150,8 @@ export function FarmerProvider({ children }) {
       const nextOrderNum = prev.orders.length + 20
       const orderRef = `FL-2026-0${nextOrderNum}`
       const totalAmount = target.offeredPrice * target.quantity
+      const chosenPreference = options?.paymentPreference || target.paymentPreference
+      const isBefore = chosenPreference === 'Payment Before Collection'
 
       const newOrder = {
         id: `ord-${Date.now()}`,
@@ -150,11 +164,10 @@ export function FarmerProvider({ children }) {
         unit: target.unit,
         agreedPrice: target.offeredPrice,
         totalAmount,
-        paymentArrangement: target.paymentPreference,
-        paymentStatus:
-          target.paymentPreference === 'Payment Before Collection'
-            ? 'Awaiting Company Payment'
-            : 'Due After Collection & Weighing',
+        paymentArrangement: chosenPreference,
+        paymentStatus: isBefore
+          ? 'Awaiting Company Payment'
+          : 'Due After Collection & Weighing',
         status: 'Confirmed',
         farmerConfirmed: false,
         collectionSchedule: {
@@ -181,6 +194,7 @@ export function FarmerProvider({ children }) {
         o.id === offerId
           ? {
               ...o,
+              paymentPreference: chosenPreference,
               status: 'accepted',
               expiresIn: 'Deal Closed',
               history: [
@@ -188,7 +202,7 @@ export function FarmerProvider({ children }) {
                 {
                   id: `r-${Date.now()}`,
                   actor: 'farmer',
-                  label: 'Offer Accepted',
+                  label: `Offer Accepted (${isBefore ? 'Pay Before Pickup' : 'Pay at Pickup'})`,
                   price: o.offeredPrice,
                   quantity: o.quantity,
                   time: 'Just now',
@@ -202,7 +216,7 @@ export function FarmerProvider({ children }) {
         id: `not-${Date.now()}`,
         type: 'order',
         title: `Order ${orderRef} Confirmed`,
-        message: `Agreed ${target.quantity} ${target.unit} of ${target.productName} at ₹${target.offeredPrice}/${target.unit}.`,
+        message: `Agreed ${target.quantity} ${target.unit} of ${target.productName} at ₹${target.offeredPrice}/${target.unit} (${chosenPreference}).`,
         time: 'Just now',
         unread: true,
         link: '/farmers/orders',
@@ -393,6 +407,9 @@ export function FarmerProvider({ children }) {
     paymentPreference,
     validityHours = 24,
   }) => {
+    const newOfferId = `off-${Date.now()}`
+    const createdAtMs = Date.now()
+
     setState((prev) => {
       const listing = prev.listings.find((l) => l.id === listingId)
       if (!listing) return prev
@@ -400,7 +417,7 @@ export function FarmerProvider({ children }) {
       const cleanPrice = Number(offeredPrice)
       const cleanQty = Number(quantity)
       const newOffer = {
-        id: `off-${Date.now()}`,
+        id: newOfferId,
         listingId: listing.id,
         productName: listing.productName,
         companyName,
@@ -410,7 +427,8 @@ export function FarmerProvider({ children }) {
         unit: listing.unit,
         paymentPreference,
         status: 'pending_farmer',
-        expiresIn: `${validityHours} hours left`,
+        expiresIn: `Just sent · ${validityHours}h left`,
+        createdAtMs,
         history: [
           {
             id: `r-${Date.now()}`,
@@ -442,9 +460,11 @@ export function FarmerProvider({ children }) {
         notifications: [notif, ...prev.notifications],
       }
     })
+
+    return newOfferId
   }
 
-  const acceptFarmerCounterByCompany = (offerId) => {
+  const acceptFarmerCounterByCompany = (offerId, options = {}) => {
     setState((prev) => {
       const target = prev.offers.find((o) => o.id === offerId)
       if (!target || target.status === 'accepted') return prev
@@ -452,6 +472,11 @@ export function FarmerProvider({ children }) {
       const nextOrderNum = prev.orders.length + 20
       const orderRef = `FL-2026-0${nextOrderNum}`
       const totalAmount = target.offeredPrice * target.quantity
+      const chosenPreference = options?.paymentPreference || target.paymentPreference
+      const isBefore = chosenPreference === 'Payment Before Collection'
+      const paidNow = isBefore && Boolean(options?.payNowImmediate)
+      const refText =
+        (options?.paymentRef || '').trim() || `UPI${Math.floor(100000 + Math.random() * 900000)}`
 
       const newOrder = {
         id: `ord-${Date.now()}`,
@@ -464,11 +489,12 @@ export function FarmerProvider({ children }) {
         unit: target.unit,
         agreedPrice: target.offeredPrice,
         totalAmount,
-        paymentArrangement: target.paymentPreference,
-        paymentStatus:
-          target.paymentPreference === 'Payment Before Collection'
-            ? 'Awaiting Company Payment'
-            : 'Due After Collection & Weighing',
+        paymentArrangement: chosenPreference,
+        paymentStatus: isBefore
+          ? paidNow
+            ? `Paid · ${refText}`
+            : 'Awaiting Company Payment'
+          : 'Due After Collection & Weighing',
         status: 'Confirmed',
         farmerConfirmed: false,
         collectionSchedule: {
@@ -495,6 +521,7 @@ export function FarmerProvider({ children }) {
         o.id === offerId
           ? {
               ...o,
+              paymentPreference: chosenPreference,
               status: 'accepted',
               expiresIn: 'Deal Closed',
               history: [
@@ -502,7 +529,9 @@ export function FarmerProvider({ children }) {
                 {
                   id: `r-${Date.now()}`,
                   actor: 'company',
-                  label: 'Company Accepted Counteroffer',
+                  label: paidNow
+                    ? `Company Accepted & Paid (${refText})`
+                    : `Company Accepted (${isBefore ? 'Advance' : 'Pay at Pickup'})`,
                   price: o.offeredPrice,
                   quantity: o.quantity,
                   time: 'Just now',
