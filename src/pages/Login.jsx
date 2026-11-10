@@ -1,18 +1,21 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   AuthEmailField,
   AuthPasswordField,
   AuthWaveBackdrop,
 } from '../components/AuthFields'
 import Footer from '../components/Footer'
+import { useFarmer } from '../context/farmerContextStore'
 import { validateCredentials } from '../utils/authValidation'
 
 export default function Login() {
+  const { setFarmerSessionEmail } = useFarmer()
+  const navigate = useNavigate()
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState({})
-  const [submittedEmail, setSubmittedEmail] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -20,9 +23,8 @@ export default function Login() {
     setErrors(nextErrors)
 
     if (Object.keys(nextErrors).length === 0) {
-      setSubmittedEmail(email.trim())
-    } else {
-      setSubmittedEmail('')
+      setFarmerSessionEmail(email.trim())
+      navigate('/farmers')
     }
   }
 
@@ -87,23 +89,6 @@ export default function Login() {
                 Enter your email ID and password to access your FarmLink account.
               </p>
             </div>
-
-            {submittedEmail && (
-              <div
-                role="status"
-                className="mb-3.5 rounded-xl border border-[#b7dcab] bg-[#eef7e9] px-3.5 py-2.5 text-xs sm:text-sm text-[#143e22]"
-              >
-                <p className="font-semibold">
-                  Form validated for <span className="underline">{submittedEmail}</span>
-                </p>
-                <p className="mt-0.5 text-xs text-[#2c4a31]">
-                  Backend authentication is not connected yet.{' '}
-                  <Link to="/farmers" className="font-semibold text-[#184828] underline hover:text-[#12381e]">
-                    Preview Farmer Dashboard →
-                  </Link>
-                </p>
-              </div>
-            )}
 
             <form onSubmit={handleSubmit} noValidate className="space-y-3">
               <AuthEmailField

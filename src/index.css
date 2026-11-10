@@ -16,3 +16,12 @@ body {
   background-color: var(--color-farm-cream);
   color: #2c3e2d;
 }
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
