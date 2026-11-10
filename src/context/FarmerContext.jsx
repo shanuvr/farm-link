@@ -142,7 +142,7 @@ export function FarmerProvider({ children }) {
     }))
   }
 
-  const acceptOffer = (offerId, options = {}) => {
+  const acceptOffer = (offerId) => {
     setState((prev) => {
       const target = prev.offers.find((o) => o.id === offerId)
       if (!target || target.status === 'accepted') return prev
@@ -150,7 +150,10 @@ export function FarmerProvider({ children }) {
       const nextOrderNum = prev.orders.length + 20
       const orderRef = `FL-2026-0${nextOrderNum}`
       const totalAmount = target.offeredPrice * target.quantity
-      const chosenPreference = options?.paymentPreference || target.paymentPreference
+      const chosenPreference =
+        target.paymentPreference === 'Payment After Collection'
+          ? 'Payment After Collection'
+          : 'Payment Before Collection'
       const isBefore = chosenPreference === 'Payment Before Collection'
 
       const newOrder = {

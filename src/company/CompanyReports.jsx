@@ -84,26 +84,28 @@ export default function CompanyReports() {
       </div>
 
       {/* KPI Strip */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <div className="rounded-xl bg-white border border-[#e2e6e1] p-4 shadow-2xs">
-          <p className="text-xs font-medium text-slate-500">Total Contract Value</p>
-          <p className="font-serif text-2xl font-bold text-slate-900 mt-1">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+        <div className="rounded-xl bg-white border border-[#e2e6e1] px-3 py-2.5 sm:p-4 shadow-2xs">
+          <p className="text-[11px] sm:text-xs font-medium text-slate-500">Total Contract Value</p>
+          <p className="font-serif text-[18px] sm:text-2xl font-bold text-slate-900 mt-0.5 sm:mt-1 leading-tight">
             {formatINR(summary.totalSpend)}
           </p>
         </div>
-        <div className="rounded-xl bg-white border border-[#e2e6e1] p-4 shadow-2xs">
-          <p className="text-xs font-medium text-slate-500">Total Volume Procured</p>
-          <p className="font-serif text-2xl font-bold text-slate-900 mt-1">
+        <div className="rounded-xl bg-white border border-[#e2e6e1] px-3 py-2.5 sm:p-4 shadow-2xs">
+          <p className="text-[11px] sm:text-xs font-medium text-slate-500">Volume Procured</p>
+          <p className="font-serif text-[18px] sm:text-2xl font-bold text-slate-900 mt-0.5 sm:mt-1 leading-tight">
             {summary.totalKg} kg
           </p>
         </div>
-        <div className="rounded-xl bg-white border border-[#e2e6e1] p-4 shadow-2xs">
-          <p className="text-xs font-medium text-slate-500">Orders Recorded</p>
-          <p className="font-serif text-2xl font-bold text-slate-900 mt-1">{allOrders.length}</p>
+        <div className="rounded-xl bg-white border border-[#e2e6e1] px-3 py-2.5 sm:p-4 shadow-2xs">
+          <p className="text-[11px] sm:text-xs font-medium text-slate-500">Orders Recorded</p>
+          <p className="font-serif text-[18px] sm:text-2xl font-bold text-slate-900 mt-0.5 sm:mt-1 leading-tight">
+            {allOrders.length}
+          </p>
         </div>
-        <div className="rounded-xl bg-white border border-[#e2e6e1] p-4 shadow-2xs">
-          <p className="text-xs font-medium text-slate-500">Settled &amp; Completed</p>
-          <p className="font-serif text-2xl font-bold text-[#184828] mt-1">
+        <div className="rounded-xl bg-white border border-[#e2e6e1] px-3 py-2.5 sm:p-4 shadow-2xs">
+          <p className="text-[11px] sm:text-xs font-medium text-slate-500">Settled &amp; Completed</p>
+          <p className="font-serif text-[18px] sm:text-2xl font-bold text-[#184828] mt-0.5 sm:mt-1 leading-tight">
             {summary.completedCount}
           </p>
         </div>

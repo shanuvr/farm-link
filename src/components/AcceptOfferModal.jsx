@@ -7,21 +7,29 @@ const BEFORE = 'Payment Before Collection'
 const AFTER = 'Payment After Collection'
 
 /**
- * Shared deal-acceptance confirmation dialog with Pay Now (via FarmLink Pay Gateway)
- * vs Pay at Pickup selection across both Company Portal and Farmer Portal.
+ * Shared deal-acceptance confirmation dialog:
+ * - Company Buyers choose Pay Now (via FarmLink Pay Gateway) vs Pay at Pickup.
+ * - Farmers review the Company-specified payment terms and payout account read-only before confirming.
  */
-export default function AcceptOfferModal({ offer, role = 'company', onClose, onConfirm }) {
+export default function AcceptOfferModal({
+  offer,
+  role = 'company',
+  payoutDetails,
+  onClose,
+  onConfirm,
+}) {
   const [step, setStep] = useState('terms') // 'terms' | 'gateway'
   const [paymentPreference, setPaymentPreference] = useState(
     offer.paymentPreference === AFTER ? AFTER : BEFORE
   )
 
   const isCompany = role === 'company'
-  const isBefore = paymentPreference === BEFORE
+  const companyTerm = offer.paymentPreference === AFTER ? AFTER : BEFORE
+  const isBefore = isCompany ? paymentPreference === BEFORE : companyTerm === BEFORE
   const totalValue = (Number(offer.offeredPrice) || 0) * (Number(offer.quantity) || 0)
   const counterparty = isCompany ? offer.farmerName : offer.companyName
-  const farmerPayoutInfo =
-    isCompany && offer.farmerPayout ? getPayoutDestinationInfo(offer.farmerPayout) : null
+  const activePayout = payoutDetails || offer.farmerPayout
+  const payoutInfo = activePayout ? getPayoutDestinationInfo(activePayout) : null
 
   const handleConfirmTerms = (e) => {
     e.preventDefault()
@@ -30,7 +38,7 @@ export default function AcceptOfferModal({ offer, role = 'company', onClose, onC
       return
     }
     onConfirm({
-      paymentPreference,
+      paymentPreference: isCompany ? paymentPreference : companyTerm,
       payNowImmediate: false,
       paymentRef: '',
     })
@@ -54,7 +62,7 @@ export default function AcceptOfferModal({ offer, role = 'company', onClose, onC
           <PaymentGatewayPanel
             amount={totalValue}
             recipientName={offer.farmerName}
-            recipientPayout={offer.farmerPayout}
+            recipientPayout={activePayout}
             itemSummary={`${offer.productName} · ${offer.quantity} ${offer.unit}`}
             backLabel="← Back"
             onCancel={() => setStep('terms')}
@@ -116,75 +124,108 @@ export default function AcceptOfferModal({ offer, role = 'company', onClose, onC
                 </div>
               </div>
 
-              {/* Payment Timing Choice */}
-              <div className="space-y-2">
-                <p className="text-xs font-bold text-slate-800">Choose Payment Option</p>
+              {/* Company Decides Payment Mode vs Farmer Reviews Agreed Payment Terms */}
+              {isCompany ? (
+                <div className="space-y-2">
+                  <p className="text-xs font-bold text-slate-800">Choose Payment Option</p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <button
-                    type="button"
-                    onClick={() => setPaymentPreference(BEFORE)}
-                    className={`text-left rounded-2xl border p-3 transition-all cursor-pointer ${
-                      isBefore
-                        ? 'bg-emerald-50/70 border-[#184828] ring-1 ring-[#184828]'
-                        : 'bg-white border-slate-200 hover:border-slate-300'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-bold text-slate-900">
-                        {isCompany ? 'Pay Now (Advance)' : 'Pay Before Pickup'}
-                      </span>
-                      <span
-                        className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${
-                          isBefore ? 'border-[#184828] bg-[#184828]' : 'border-slate-300'
-                        }`}
-                      >
-                        {isBefore && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
-                      </span>
-                    </div>
-                    <p className="mt-1 text-[11px] text-slate-600 leading-snug">
-                      {isCompany
-                        ? 'Pay upfront via FarmLink Pay before scheduling farm pickup.'
-                        : 'Require buyer advance payment prior to pickup dispatch.'}
-                    </p>
-                  </button>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <button
+                      type="button"
+                      onClick={() => setPaymentPreference(BEFORE)}
+                      className={`text-left rounded-2xl border p-3 transition-all cursor-pointer ${
+                        isBefore
+                          ? 'bg-emerald-50/70 border-[#184828] ring-1 ring-[#184828]'
+                          : 'bg-white border-slate-200 hover:border-slate-300'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs font-bold text-slate-900">Pay Now (Advance)</span>
+                        <span
+                          className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${
+                            isBefore ? 'border-[#184828] bg-[#184828]' : 'border-slate-300'
+                          }`}
+                        >
+                          {isBefore && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-[11px] text-slate-600 leading-snug">
+                        Pay upfront via FarmLink Pay before scheduling farm pickup.
+                      </p>
+                    </button>
 
-                  <button
-                    type="button"
-                    onClick={() => setPaymentPreference(AFTER)}
-                    className={`text-left rounded-2xl border p-3 transition-all cursor-pointer ${
-                      !isBefore
-                        ? 'bg-sky-50/70 border-sky-700 ring-1 ring-sky-700'
-                        : 'bg-white border-slate-200 hover:border-slate-300'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-bold text-slate-900">Pay at Pickup</span>
-                      <span
-                        className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${
-                          !isBefore ? 'border-sky-700 bg-sky-700' : 'border-slate-300'
-                        }`}
-                      >
-                        {!isBefore && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
-                      </span>
-                    </div>
-                    <p className="mt-1 text-[11px] text-slate-600 leading-snug">
-                      Settle full invoice at farmgate after collection &amp; weighing.
-                    </p>
-                  </button>
-                </div>
-
-                {farmerPayoutInfo && (
-                  <div className="rounded-xl bg-[#f8faf8] border border-[#e5e9e4] px-3 py-2 flex items-center justify-between gap-2 text-[11px]">
-                    <span className="text-slate-500 font-medium">
-                      Farmer Payout ({farmerPayoutInfo.mode})
-                    </span>
-                    <span className="font-mono font-semibold text-[#184828] truncate">
-                      {farmerPayoutInfo.primaryValue}
-                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setPaymentPreference(AFTER)}
+                      className={`text-left rounded-2xl border p-3 transition-all cursor-pointer ${
+                        !isBefore
+                          ? 'bg-sky-50/70 border-sky-700 ring-1 ring-sky-700'
+                          : 'bg-white border-slate-200 hover:border-slate-300'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs font-bold text-slate-900">Pay at Pickup</span>
+                        <span
+                          className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${
+                            !isBefore ? 'border-sky-700 bg-sky-700' : 'border-slate-300'
+                          }`}
+                        >
+                          {!isBefore && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-[11px] text-slate-600 leading-snug">
+                        Settle full invoice at farmgate after collection &amp; weighing.
+                      </p>
+                    </button>
                   </div>
-                )}
-              </div>
+
+                  {payoutInfo && (
+                    <div className="rounded-xl bg-[#f8faf8] border border-[#e5e9e4] px-3 py-2 flex items-center justify-between gap-2 text-[11px]">
+                      <span className="text-slate-500 font-medium">
+                        Farmer Payout ({payoutInfo.mode})
+                      </span>
+                      <span className="font-mono font-semibold text-[#184828] truncate">
+                        {payoutInfo.primaryValue}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <div className="rounded-2xl bg-[#f8faf8] border border-[#e5e9e4] p-3.5 space-y-1.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                        Payment Terms (Set by Company)
+                      </span>
+                      <span
+                        className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${
+                          isBefore
+                            ? 'bg-emerald-50 text-[#184828] border-emerald-200'
+                            : 'bg-sky-50 text-sky-800 border-sky-200'
+                        }`}
+                      >
+                        {isBefore ? 'Pay Before Pickup' : 'Pay at Pickup'}
+                      </span>
+                    </div>
+                    <p className="text-[11.5px] text-slate-600 leading-snug">
+                      {isBefore
+                        ? 'Buyer transfers payment upfront via FarmLink Pay before scheduling farm collection.'
+                        : 'Buyer settles full invoice at farmgate after collection and weighing.'}
+                    </p>
+                  </div>
+
+                  {payoutInfo && (
+                    <div className="rounded-xl bg-[#f8faf8] border border-[#e5e9e4] px-3 py-2 flex items-center justify-between gap-2 text-[11px]">
+                      <span className="text-slate-500 font-medium">
+                        Your Payout Account ({payoutInfo.mode})
+                      </span>
+                      <span className="font-mono font-semibold text-[#184828] truncate">
+                        {payoutInfo.primaryValue}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Footer Buttons */}
               <div className="pt-2 border-t border-slate-100 flex items-center justify-end gap-2.5">

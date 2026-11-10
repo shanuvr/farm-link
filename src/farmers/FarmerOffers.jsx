@@ -13,7 +13,7 @@ const OFFER_STATUS_BADGES = {
 }
 
 export default function FarmerOffers() {
-  const { offers, acceptOffer, counterOffer, rejectOffer } = useFarmer()
+  const { profile, offers, acceptOffer, counterOffer, rejectOffer } = useFarmer()
 
   const [tab, setTab] = useState('action')
   const [counterId, setCounterId] = useState(null)
@@ -56,9 +56,9 @@ export default function FarmerOffers() {
     setAcceptingOffer(offer)
   }
 
-  const handleConfirmAccept = (options) => {
+  const handleConfirmAccept = () => {
     if (!acceptingOffer) return
-    acceptOffer(acceptingOffer.id, options)
+    acceptOffer(acceptingOffer.id)
     setCounterId(null)
     setRejectId(null)
     setJustAcceptedName(acceptingOffer.productName)
@@ -381,6 +381,7 @@ export default function FarmerOffers() {
           key={acceptingOffer.id}
           offer={acceptingOffer}
           role="farmer"
+          payoutDetails={profile.payoutDetails}
           onClose={() => setAcceptingOffer(null)}
           onConfirm={handleConfirmAccept}
         />

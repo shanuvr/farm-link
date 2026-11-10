@@ -53,9 +53,10 @@ function App() {
           <Route path="/company/login" element={<Navigate to="/company" replace />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
-          <Route path="/admin" element={<AdminHome />} />
           <Route path="*" element={<NotFound />} />
         </Route>
+
+        <Route path="/admin" element={<AdminHome />} />
 
         <Route element={<CompanyLayout />}>
           <Route path="/company/dashboard" element={<CompanyHome />} />

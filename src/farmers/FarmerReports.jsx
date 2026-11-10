@@ -94,37 +94,37 @@ export default function FarmerReports() {
       </div>
 
       {/* 4 KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <div className="rounded-xl bg-white border border-[#e2e6e1] p-4 shadow-2xs">
-          <p className="text-xs font-medium text-slate-500">Total Contracted Sales</p>
-          <p className="font-serif text-xl sm:text-2xl font-bold text-slate-900 mt-1">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+        <div className="rounded-xl bg-white border border-[#e2e6e1] px-3 py-2.5 sm:p-4 shadow-2xs">
+          <p className="text-[11px] sm:text-xs font-medium text-slate-500">Contracted Sales</p>
+          <p className="font-serif text-[18px] sm:text-2xl font-bold text-slate-900 mt-0.5 sm:mt-1 leading-tight">
             {formatINR(analytics.totalContracted)}
           </p>
         </div>
 
-        <div className="rounded-xl bg-white border border-[#e2e6e1] p-4 shadow-2xs">
-          <div className="flex items-center justify-between">
-            <p className="text-xs font-medium text-slate-500">Payments Received</p>
-            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+        <div className="rounded-xl bg-white border border-[#e2e6e1] px-3 py-2.5 sm:p-4 shadow-2xs">
+          <div className="flex items-center justify-between gap-1">
+            <p className="text-[11px] sm:text-xs font-medium text-slate-500">Payments Received</p>
+            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 shrink-0" />
           </div>
-          <p className="font-serif text-xl sm:text-2xl font-bold text-[#184828] mt-1">
+          <p className="font-serif text-[18px] sm:text-2xl font-bold text-[#184828] mt-0.5 sm:mt-1 leading-tight">
             {formatINR(analytics.totalPaid)}
           </p>
         </div>
 
-        <div className="rounded-xl bg-white border border-[#e2e6e1] p-4 shadow-2xs">
-          <div className="flex items-center justify-between">
-            <p className="text-xs font-medium text-slate-500">Pending Payouts</p>
-            <span className="w-2 h-2 rounded-full bg-amber-500" />
+        <div className="rounded-xl bg-white border border-[#e2e6e1] px-3 py-2.5 sm:p-4 shadow-2xs">
+          <div className="flex items-center justify-between gap-1">
+            <p className="text-[11px] sm:text-xs font-medium text-slate-500">Pending Payouts</p>
+            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-500 shrink-0" />
           </div>
-          <p className="font-serif text-xl sm:text-2xl font-bold text-amber-800 mt-1">
+          <p className="font-serif text-[18px] sm:text-2xl font-bold text-amber-800 mt-0.5 sm:mt-1 leading-tight">
             {formatINR(analytics.totalPending)}
           </p>
         </div>
 
-        <div className="rounded-xl bg-white border border-[#e2e6e1] p-4 shadow-2xs">
-          <p className="text-xs font-medium text-slate-500">Total Harvest Sold</p>
-          <p className="font-serif text-xl sm:text-2xl font-bold text-slate-900 mt-1">
+        <div className="rounded-xl bg-white border border-[#e2e6e1] px-3 py-2.5 sm:p-4 shadow-2xs">
+          <p className="text-[11px] sm:text-xs font-medium text-slate-500">Total Harvest Sold</p>
+          <p className="font-serif text-[18px] sm:text-2xl font-bold text-slate-900 mt-0.5 sm:mt-1 leading-tight">
             {analytics.totalSoldKg} kg
           </p>
         </div>

@@ -43,7 +43,7 @@ function WatercolorSplash() {
 
 export default function HowItWorksSection() {
   return (
-    <section className="relative flex-1 w-full bg-[#fbf8f1] flex flex-col justify-between pt-3 sm:pt-5 lg:pt-2 [@media(min-width:1280px)_and_(min-height:760px)]:pt-5 pb-[82px] sm:pb-24 lg:pb-[clamp(54px,5.2vw,84px)] [@media(min-width:1280px)_and_(min-height:760px)]:pb-[clamp(68px,6vw,96px)] overflow-x-clip">
+    <section className="relative flex-1 w-full bg-[#fbf8f1] flex flex-col justify-start lg:justify-between pt-5 sm:pt-7 lg:pt-2 [@media(min-width:1280px)_and_(min-height:760px)]:pt-5 pb-[72px] sm:pb-24 lg:pb-[clamp(54px,5.2vw,84px)] [@media(min-width:1280px)_and_(min-height:760px)]:pb-[clamp(68px,6vw,96px)] overflow-x-clip">
       {/* Bottom Rural Landscape & Wave Backdrop (full aspect ratio, never height-cropped) */}
       <div className="hidden sm:block absolute inset-x-0 bottom-0 pointer-events-none select-none z-0" aria-hidden="true">
         <img
@@ -60,10 +60,10 @@ export default function HowItWorksSection() {
         />
       </div>
 
-      {/* Main Content — stays balanced in open cream space above the bottom wave on mobile & desktop */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full px-2 sm:px-6 lg:px-8 my-auto">
+      {/* Main Content — flows directly beneath the Feature Card on mobile (no awkward top gap), centered inside open cream on lg+ */}
+      <div className="relative z-10 max-w-7xl mx-auto w-full px-2 sm:px-6 lg:px-8 lg:my-auto">
         {/* Section Header with ornamental leaf accents */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3 lg:gap-3 mb-2.5 sm:mb-5 lg:mb-2 [@media(min-width:1280px)_and_(min-height:760px)]:mb-5">
+        <div className="flex items-center justify-center gap-2 sm:gap-3 lg:gap-3 mb-3.5 sm:mb-5 lg:mb-2 [@media(min-width:1280px)_and_(min-height:760px)]:mb-5">
           <div className="w-7 sm:w-16 lg:w-20 h-[1px] bg-[#5d281f]/35 rounded-full" />
 
           <div className="flex items-center gap-1.5 sm:gap-2">
@@ -71,7 +71,7 @@ export default function HowItWorksSection() {
               <path d="M21 3C11.5 3 7 8 7 14c0 1.5.3 3 .8 4.2L3 21l3.8-4.8c1.2.5 2.7.8 4.2.8 6 0 11-4.5 11-14z" />
             </svg>
 
-            <h2 className="font-serif text-[17.5px] sm:text-2xl lg:text-[22px] xl:text-[24px] [@media(min-width:1280px)_and_(min-height:760px)]:text-[30px] font-bold text-[#143e22] tracking-tight whitespace-nowrap">
+            <h2 className="font-serif text-[18.5px] sm:text-2xl lg:text-[22px] xl:text-[24px] [@media(min-width:1280px)_and_(min-height:760px)]:text-[30px] font-bold text-[#143e22] tracking-tight whitespace-nowrap">
               How FarmLink Works
             </h2>
 
@@ -88,7 +88,7 @@ export default function HowItWorksSection() {
           {STEPS.map((step, idx) => (
             <div key={step.num} className="relative flex flex-col items-center text-center group">
               {/* Compact organic watercolor splash behind illustration */}
-              <div className="relative w-13 h-11 sm:w-20 sm:h-16 lg:w-17 lg:h-13 xl:w-18 xl:h-14 [@media(min-width:1280px)_and_(min-height:760px)]:w-26 [@media(min-width:1280px)_and_(min-height:760px)]:h-20 flex items-center justify-center p-1 transition-transform duration-200 group-hover:scale-105">
+              <div className="relative w-15 h-13 sm:w-20 sm:h-16 lg:w-17 lg:h-13 xl:w-18 xl:h-14 [@media(min-width:1280px)_and_(min-height:760px)]:w-26 [@media(min-width:1280px)_and_(min-height:760px)]:h-20 flex items-center justify-center p-1 transition-transform duration-200 group-hover:scale-105">
                 <WatercolorSplash />
                 <img
                   src={step.icon}
@@ -98,7 +98,7 @@ export default function HowItWorksSection() {
               </div>
 
               {/* Compact Step Title */}
-              <h3 className="font-serif font-bold text-[10px] sm:text-[12.5px] lg:text-[13px] xl:text-[13.5px] [@media(min-width:1280px)_and_(min-height:760px)]:text-[16px] text-[#143e22] leading-[1.15] sm:leading-[1.2] mt-1">
+              <h3 className="font-serif font-bold text-[10.5px] sm:text-[12.5px] lg:text-[13px] xl:text-[13.5px] [@media(min-width:1280px)_and_(min-height:760px)]:text-[16px] text-[#143e22] leading-[1.18] sm:leading-[1.2] mt-1.5 lg:mt-1">
                 {step.num}
               </h3>
 
@@ -110,7 +110,7 @@ export default function HowItWorksSection() {
               {/* Connecting Arrow between columns */}
               {idx < STEPS.length - 1 && (
                 <div
-                  className="flex absolute top-3.5 sm:top-6 lg:top-4.5 [@media(min-width:1280px)_and_(min-height:760px)]:top-7 -right-1.5 sm:-right-2.5 lg:-right-3 items-center justify-center text-[#5d281f]/75 pointer-events-none z-20"
+                  className="flex absolute top-4.5 sm:top-6 lg:top-4.5 [@media(min-width:1280px)_and_(min-height:760px)]:top-7 -right-1.5 sm:-right-2.5 lg:-right-3 items-center justify-center text-[#5d281f]/75 pointer-events-none z-20"
                   aria-hidden="true"
                 >
                   <svg
@@ -132,10 +132,10 @@ export default function HowItWorksSection() {
         </div>
 
         {/* Mobile View CTA Button matching mobile mockup */}
-        <div className="mt-3 sm:mt-5 flex justify-center lg:hidden">
+        <div className="mt-4 sm:mt-5 flex justify-center lg:hidden">
           <Link
             to="/how-it-works"
-            className="inline-flex items-center gap-1.5 sm:gap-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-full border border-[#184828]/80 bg-[#fffdf8]/95 text-[#143e22] font-bold text-[12.5px] sm:text-[13.5px] shadow-xs hover:bg-[#184828] hover:text-white transition-all"
+            className="inline-flex items-center gap-1.5 sm:gap-2 px-5.5 sm:px-6 py-2 sm:py-2.5 rounded-full border border-[#184828]/80 bg-[#fffdf8]/95 text-[#143e22] font-bold text-[13px] sm:text-[13.5px] shadow-xs hover:bg-[#184828] hover:text-white transition-all"
           >
             <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />

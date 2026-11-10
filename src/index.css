@@ -25,3 +25,21 @@ body {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(24, 72, 40, 0.22) transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(24, 72, 40, 0.22);
+  border-radius: 9999px;
+}

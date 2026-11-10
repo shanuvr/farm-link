@@ -42,85 +42,89 @@ export default function CompanyHome() {
 
   const kpis = [
     {
-      label: 'Available Stock Lots',
+      label: 'Available Lots',
       value: activeBatches.length,
-      sub: `${activeBatches.filter((l) => l.type === 'Ready Stock').length} ready for pickup`,
+      sub: `${activeBatches.filter((l) => l.type === 'Ready Stock').length} ready`,
       to: '/company/browse',
       dot: 'bg-[#184828]',
     },
     {
-      label: 'Counteroffers Received',
+      label: 'Counteroffers',
       value: counterOffers.length,
-      sub: `${waitingOffers.length} awaiting farmer reply`,
+      sub: `${waitingOffers.length} awaiting`,
       to: '/company/offers',
       dot: counterOffers.length > 0 ? 'bg-amber-500' : 'bg-slate-400',
     },
     {
       label: 'Active Orders',
       value: activeOrders.length,
-      sub: `${allOrders.length} total orders placed`,
+      sub: `${allOrders.length} total`,
       to: '/company/orders',
       dot: 'bg-sky-600',
     },
     {
-      label: 'Procurement Volume',
+      label: 'Procurement Spend',
       value: formatINR(totalSpend),
-      sub: 'View breakdown & CSV →',
+      sub: 'Reports →',
       to: '/company/reports',
       dot: 'bg-slate-800',
     },
   ]
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3.5 sm:space-y-5">
       {/* Compact Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-        <div>
-          <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700">
-            <span className="w-2 h-2 rounded-full bg-emerald-500" />
-            <span>
+      <div className="flex items-center justify-between gap-2">
+        <div className="min-w-0">
+          <div className="inline-flex items-center gap-1.5 text-[10.5px] sm:text-[11px] font-semibold text-emerald-700">
+            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 shrink-0" />
+            <span className="truncate">
               {companyProfile.companyName} · {companyProfile.headquarters}
             </span>
           </div>
-          <h1 className="mt-0.5 font-serif text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+          <h1 className="mt-0.5 font-serif text-lg sm:text-2xl font-bold text-slate-900 tracking-tight truncate">
             Welcome back, {companyProfile.officerName}
           </h1>
         </div>
 
         <Link
           to="/company/browse"
-          className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[#184828] hover:bg-[#12391f] text-white text-xs font-semibold shadow-2xs transition-colors self-start"
+          className="shrink-0 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-[#184828] hover:bg-[#12391f] text-white text-[11px] sm:text-xs font-semibold shadow-2xs transition-colors"
         >
-          Browse Fresh Stock →
+          Browse Stock →
         </Link>
       </div>
 
       {/* KPI Cards Row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
         {kpis.map((item) => (
           <Link
             key={item.label}
             to={item.to}
-            className="rounded-xl bg-white border border-[#e2e6e1] px-4 py-3.5 hover:border-slate-300 hover:shadow-xs transition-all group"
+            className="rounded-xl bg-white border border-[#e2e6e1] px-3 py-2 sm:px-4 sm:py-3.5 hover:border-slate-300 hover:shadow-xs transition-all group"
           >
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-[11.5px] font-medium text-slate-500">{item.label}</span>
-              <span className={`w-2 h-2 rounded-full ${item.dot}`} aria-hidden="true" />
+            <div className="flex items-center justify-between gap-1.5">
+              <span className="text-[11px] sm:text-[11.5px] font-medium text-slate-500 truncate">
+                {item.label}
+              </span>
+              <span className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full shrink-0 ${item.dot}`} aria-hidden="true" />
             </div>
-            <p className="mt-1 font-serif text-xl sm:text-2xl font-bold text-slate-900 leading-tight">
-              {item.value}
-            </p>
-            <p className="mt-0.5 text-[11px] text-slate-500 group-hover:text-slate-800 transition-colors">
-              {item.sub}
-            </p>
+            <div className="mt-1 flex items-baseline justify-between gap-1.5 sm:block">
+              <p className="font-serif text-[18px] sm:text-2xl font-bold text-slate-900 leading-none">
+                {item.value}
+              </p>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 group-hover:text-slate-800 transition-colors truncate sm:mt-1">
+                {item.sub}
+              </p>
+            </div>
           </Link>
         ))}
       </div>
 
       {/* Two-Column Action Queues */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
         {/* Counteroffers */}
-        <section className="rounded-2xl bg-white border border-[#e2e6e1] p-4 sm:p-5">
+        <section className="rounded-2xl bg-white border border-[#e2e6e1] p-3.5 sm:p-5">
           <div className="flex items-center justify-between mb-3">
             <h2 className="font-serif text-base sm:text-lg font-bold text-slate-900">
               Farmer Counteroffers
