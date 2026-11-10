@@ -94,11 +94,7 @@ export default function CompanySidebar({
       aria-label="Company procurement sidebar navigation"
     >
       {/* Top Brand Header */}
-      <FarmLinkSidebarBrand
-        to="/company/dashboard"
-        portalLabelTop="Procurement"
-        portalLabelBottom="Desk"
-      />
+      <FarmLinkSidebarBrand to="/company/dashboard" />
 
       {/* Navigation Sections */}
       <div className="flex-1 px-3 py-4 space-y-5 overflow-y-auto no-scrollbar">

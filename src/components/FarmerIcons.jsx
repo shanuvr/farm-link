@@ -70,34 +70,37 @@ export function ReportsIcon({ className = 'w-5 h-5' }) {
 }
 
 /**
- * Brand horizontal lockup backed with a soft white gradient pill on dark-green surfaces.
+ * Brand horizontal lockup backed with a borderless soft white radial glow on dark-green surfaces.
  */
 export function FarmLinkLogo({
   onDark = false,
   className = '',
   imgClassName = 'h-8 w-auto',
+  glowClassName = '-inset-x-6 -inset-y-2',
 }) {
-  const logoImg = (
-    <img
-      src="/FarmLink%20Green%20Landscape%20Logo.png"
-      alt="FarmLink"
-      className={`${imgClassName} object-contain shrink-0 select-none`}
-    />
-  )
-
   if (!onDark) {
     return (
       <span className={`inline-flex items-center shrink-0 ${className}`}>
-        {logoImg}
+        <img
+          src="/FarmLink%20Green%20Landscape%20Logo.png"
+          alt="FarmLink"
+          className={`${imgClassName} object-contain shrink-0 select-none`}
+        />
       </span>
     )
   }
 
   return (
-    <span
-      className={`inline-flex items-center shrink-0 rounded-xl bg-[linear-gradient(135deg,rgba(255,255,255,0.98)_0%,rgba(247,251,243,0.93)_62%,rgba(225,241,216,0.85)_100%)] px-2 py-1 shadow-[0_4px_14px_rgba(6,28,12,0.24)] ring-1 ring-white/55 ${className}`}
-    >
-      {logoImg}
+    <span className={`relative inline-flex items-center justify-center shrink-0 ${className}`}>
+      <span
+        aria-hidden="true"
+        className={`pointer-events-none absolute ${glowClassName} rounded-full bg-[radial-gradient(closest-side,rgba(255,255,255,0.96)_0%,rgba(255,255,255,0.85)_52%,rgba(255,255,255,0.38)_78%,transparent_100%)]`}
+      />
+      <img
+        src="/FarmLink%20Green%20Landscape%20Logo.png"
+        alt="FarmLink"
+        className={`relative z-10 ${imgClassName} object-contain shrink-0 select-none`}
+      />
     </span>
   )
 }
@@ -105,15 +108,28 @@ export function FarmLinkLogo({
 /**
  * Compact dark-sidebar brand header keeping h-14 alignment with main workspace bar.
  */
-export function FarmLinkSidebarBrand({ to, portalLabelTop, portalLabelBottom }) {
+export function FarmLinkSidebarBrand({ to, portalLabelTop = '', portalLabelBottom = '' }) {
+  const hasLabel = Boolean(portalLabelTop || portalLabelBottom)
+
   return (
-    <div className="h-14 px-3.5 border-b border-white/12 flex items-center">
-      <Link to={to} className="flex items-center gap-2.5 min-w-0">
-        <FarmLinkLogo onDark imgClassName="h-7.5 w-auto" />
-        <div className="border-l border-white/18 pl-2.5 flex flex-col leading-[1.18] text-[8.5px] font-bold tracking-[0.12em] text-emerald-200/90 uppercase">
-          <span>{portalLabelTop}</span>
-          <span>{portalLabelBottom}</span>
-        </div>
+    <div
+      className={`h-14 px-4 border-b border-white/12 flex items-center ${
+        hasLabel ? '' : 'justify-center'
+      }`}
+    >
+      <Link to={to} className="flex items-center gap-3 min-w-0">
+        <FarmLinkLogo
+          onDark
+          imgClassName={hasLabel ? 'h-7.5 w-auto' : 'h-8.5 w-auto'}
+          glowClassName={hasLabel ? '-inset-x-4 -inset-y-1.5' : '-inset-x-7 -inset-y-2'}
+          className={hasLabel ? 'mx-1' : ''}
+        />
+        {hasLabel && (
+          <div className="relative z-10 border-l border-white/20 pl-2.5 flex flex-col leading-[1.18] text-[8.5px] font-bold tracking-[0.12em] text-emerald-200/90 uppercase">
+            <span>{portalLabelTop}</span>
+            <span>{portalLabelBottom}</span>
+          </div>
+        )}
       </Link>
     </div>
   )
