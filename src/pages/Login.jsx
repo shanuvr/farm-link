@@ -133,7 +133,7 @@ export default function Login() {
                   Register here
                 </Link>
               </p>
-              <Link to="/company/login" className="font-semibold text-[#5d281f] hover:underline">
+              <Link to="/company" className="font-semibold text-[#5d281f] hover:underline">
                 Company Login →
               </Link>
             </div>

@@ -37,7 +37,7 @@ export default function ProduceThumb({ name, image, size = 'md' }) {
       <img
         src={resolved}
         alt={name}
-        className={`${dims} object-cover border border-[#e3d9c3] shrink-0`}
+        className={`${dims} object-cover border border-slate-200 shrink-0`}
       />
     )
   }

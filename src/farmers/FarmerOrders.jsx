@@ -45,13 +45,13 @@ export default function FarmerOrders() {
               className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-colors cursor-pointer ${
                 active
                   ? 'bg-[#184828] text-white border-[#184828]'
-                  : 'bg-[#fffdf8] text-[#465a48] border-[#e2d8c1] hover:border-[#184828]'
+                  : 'bg-white text-slate-600 border-slate-200 hover:border-[#184828]'
               }`}
             >
               <span>{item.label}</span>
               <span
                 className={`px-1.5 rounded-full text-[10px] font-bold ${
-                  active ? 'bg-white/20 text-white' : 'bg-[#f1ead9] text-[#143e22]'
+                  active ? 'bg-white/20 text-white' : 'bg-slate-100 text-[#143e22]'
                 }`}
               >
                 {item.count}
@@ -63,7 +63,7 @@ export default function FarmerOrders() {
 
       {/* Order Cards (2 columns on desktop) */}
       {visibleOrders.length === 0 ? (
-        <div className="rounded-2xl bg-[#fffdf8] border border-dashed border-[#dcd2b8] p-8 text-center">
+        <div className="rounded-2xl bg-white border border-dashed border-slate-300 p-8 text-center">
           <p className="font-serif text-base font-bold text-[#143e22]">
             {tab === 'active' ? 'No active confirmed orders' : 'No completed sales yet'}
           </p>
@@ -84,7 +84,7 @@ export default function FarmerOrders() {
             return (
               <article
                 key={order.id}
-                className="rounded-2xl bg-[#fffdf8] border border-[#e5dcbd] p-4 shadow-2xs space-y-3"
+                className="rounded-2xl bg-white border border-[#e2e6e1] p-4 shadow-2xs space-y-3"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between gap-2">
@@ -92,7 +92,7 @@ export default function FarmerOrders() {
                     <ProduceThumb name={order.productName} size="sm" />
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="px-2 py-0.5 rounded-md bg-[#f3ede0] text-[#5d281f] text-[10.5px] font-bold">
+                        <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[10.5px] font-bold">
                           {order.orderRef}
                         </span>
                         <h2 className="font-serif text-base font-bold text-[#143e22] truncate">
@@ -123,7 +123,7 @@ export default function FarmerOrders() {
                       <div key={stepLabel} className="space-y-1">
                         <div
                           className={`h-1.5 rounded-full transition-colors ${
-                            reached ? 'bg-[#184828]' : 'bg-[#e6dec9]'
+                            reached ? 'bg-[#184828]' : 'bg-slate-200'
                           }`}
                         />
                         <p
@@ -139,7 +139,7 @@ export default function FarmerOrders() {
                 </div>
 
                 {/* Payment & Collection Summary */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 rounded-xl bg-[#fbf8f1] border border-[#ede5d2] p-3 text-[11.5px]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 rounded-xl bg-[#f8faf8] border border-[#e5e9e4] p-3 text-[11.5px]">
                   <div className="space-y-1">
                     <p className="text-[10px] font-semibold uppercase tracking-wide text-[#5e7160]">
                       Payment
@@ -170,7 +170,7 @@ export default function FarmerOrders() {
 
                 {/* Receipt Confirmation */}
                 {order.status !== 'Completed' && (
-                  <div className="pt-2 border-t border-[#f0e9d9] flex items-center justify-between gap-2">
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
                     <span className="text-[11px] text-[#5e7160]">
                       Confirm once picked up &amp; weighed.
                     </span>

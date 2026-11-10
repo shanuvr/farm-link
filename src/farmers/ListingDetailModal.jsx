@@ -6,7 +6,7 @@ import { formatINR, getListingImages } from './farmerData'
 const STATUS_BADGES = {
   active: { label: 'Active', cls: 'bg-[#e8f3e1] text-[#184828]' },
   paused: { label: 'Paused', cls: 'bg-[#f6eee0] text-[#7a4b1e]' },
-  sold_out: { label: 'Fully Reserved', cls: 'bg-[#ebe6d9] text-[#465a48]' },
+  sold_out: { label: 'Sold Out', cls: 'bg-[#3c463d] text-white' },
 }
 
 export default function ListingDetailModal({
@@ -37,8 +37,6 @@ export default function ListingDetailModal({
   const images = getListingImages(listing)
 
   const available = Math.max(0, listing.quantity - listing.reservedQuantity)
-  const reservedPct =
-    listing.quantity > 0 ? Math.round((listing.reservedQuantity / listing.quantity) * 100) : 0
   const badge = STATUS_BADGES[listing.status] || STATUS_BADGES.active
 
   const linkedOffers = offers.filter((o) => o.listingId === listing.id)
@@ -61,7 +59,7 @@ export default function ListingDetailModal({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-lg bg-[#fffdf8] border border-[#e5dcbd] rounded-t-3xl sm:rounded-3xl shadow-2xl max-h-[90dvh] overflow-y-auto no-scrollbar"
+        className="w-full max-w-lg bg-white border border-slate-200 rounded-t-3xl sm:rounded-3xl shadow-2xl max-h-[90dvh] overflow-y-auto no-scrollbar"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Photo Slider */}
@@ -118,30 +116,26 @@ export default function ListingDetailModal({
           </div>
 
           {/* Stock Breakdown */}
-          <div className="rounded-xl bg-[#fbf8f1] border border-[#ede5d2] px-3 py-2">
-            <div className="flex items-center justify-between text-xs font-medium">
+          <div className="rounded-xl bg-[#f8faf8] border border-[#e5e9e4] px-3 py-2">
+            <div className="flex items-center justify-between gap-2 text-xs font-medium">
               <span className="text-[#143e22]">
                 <strong>{available} {listing.unit}</strong> available
               </span>
               <span className="text-[#5e7160]">
-                {listing.reservedQuantity} {listing.unit} reserved / {listing.quantity} {listing.unit} total
+                {listing.reservedQuantity > 0
+                  ? `${listing.reservedQuantity} ${listing.unit} in order · ${listing.quantity} ${listing.unit} total`
+                  : `${listing.quantity} ${listing.unit} total`}
               </span>
-            </div>
-            <div className="mt-1.5 h-1.5 w-full rounded-full bg-[#e6dec9] overflow-hidden">
-              <div
-                className="h-full bg-[#184828] rounded-full transition-all"
-                style={{ width: `${reservedPct}%` }}
-              />
             </div>
           </div>
 
           {/* Key Metadata Grid */}
           <div className="grid grid-cols-2 gap-2 text-xs">
-            <div className="rounded-xl bg-[#fbf8f1] border border-[#f0e9d9] px-2.5 py-2">
+            <div className="rounded-xl bg-[#f8faf8] border border-[#e5e9e4] px-2.5 py-2">
               <p className="text-[10px] text-[#6d7d6f]">Farm Location</p>
               <p className="mt-0.5 font-semibold text-[#143e22]">{listing.location}</p>
             </div>
-            <div className="rounded-xl bg-[#fbf8f1] border border-[#f0e9d9] px-2.5 py-2">
+            <div className="rounded-xl bg-[#f8faf8] border border-[#e5e9e4] px-2.5 py-2">
               <p className="text-[10px] text-[#6d7d6f]">Company Status</p>
               {listing.companyViewed?.viewed ? (
                 <p className="mt-0.5 font-semibold text-[#244e82]">
@@ -151,18 +145,18 @@ export default function ListingDetailModal({
                 <p className="mt-0.5 font-semibold text-[#7c8c7e]">Not viewed yet</p>
               )}
             </div>
-            <div className="rounded-xl bg-[#fbf8f1] border border-[#f0e9d9] px-2.5 py-2">
+            <div className="rounded-xl bg-[#f8faf8] border border-[#e5e9e4] px-2.5 py-2">
               <p className="text-[10px] text-[#6d7d6f]">Harvest Date</p>
               <p className="mt-0.5 font-semibold text-[#143e22]">{listing.harvestDate}</p>
             </div>
-            <div className="rounded-xl bg-[#fbf8f1] border border-[#f0e9d9] px-2.5 py-2">
+            <div className="rounded-xl bg-[#f8faf8] border border-[#e5e9e4] px-2.5 py-2">
               <p className="text-[10px] text-[#6d7d6f]">Available From</p>
               <p className="mt-0.5 font-semibold text-[#143e22]">{listing.availableFrom}</p>
             </div>
           </div>
 
           {listing.notes && (
-            <div className="text-xs text-[#465a48] leading-snug bg-[#fbf8f1]/70 rounded-xl border border-[#f0e9d9] px-3 py-2">
+            <div className="text-xs text-[#465a48] leading-snug bg-[#f8faf8] rounded-xl border border-[#e5e9e4] px-3 py-2">
               <span className="font-semibold text-[#143e22]">Notes: </span>
               {listing.notes}
             </div>
@@ -185,7 +179,7 @@ export default function ListingDetailModal({
 
           {/* Inline Edit Panel */}
           {editing ? (
-            <div className="rounded-xl bg-[#fbf8f1] border border-[#d9ceb4] p-3 space-y-2.5">
+            <div className="rounded-xl bg-[#f8faf8] border border-slate-200 p-3 space-y-2.5">
               <div className="grid grid-cols-2 gap-2.5">
                 <div>
                   <label className="block text-[11px] font-semibold text-[#143e22] mb-1">
@@ -196,7 +190,7 @@ export default function ListingDetailModal({
                     min="1"
                     value={editValues.askingPrice}
                     onChange={(e) => setEditValues((prev) => ({ ...prev, askingPrice: e.target.value }))}
-                    className="w-full rounded-lg border border-[#dcd2b8] bg-white px-2.5 py-1.5 text-sm text-[#143e22]"
+                    className="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-sm text-[#143e22]"
                   />
                 </div>
                 <div>
@@ -208,7 +202,7 @@ export default function ListingDetailModal({
                     min={Math.max(1, listing.reservedQuantity)}
                     value={editValues.quantity}
                     onChange={(e) => setEditValues((prev) => ({ ...prev, quantity: e.target.value }))}
-                    className="w-full rounded-lg border border-[#dcd2b8] bg-white px-2.5 py-1.5 text-sm text-[#143e22]"
+                    className="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-sm text-[#143e22]"
                   />
                 </div>
               </div>
@@ -216,7 +210,7 @@ export default function ListingDetailModal({
                 <button
                   type="button"
                   onClick={() => setEditing(false)}
-                  className="px-3 py-1.5 rounded-lg border border-[#dcd2b8] text-xs font-semibold text-[#465a48] cursor-pointer"
+                  className="px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-xs font-semibold text-slate-600 cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -230,7 +224,7 @@ export default function ListingDetailModal({
               </div>
             </div>
           ) : (
-            <div className="pt-2 border-t border-[#ede5d2] flex flex-wrap items-center justify-between gap-2">
+            <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <button
                   type="button"
@@ -241,7 +235,7 @@ export default function ListingDetailModal({
                     })
                     setEditing(true)
                   }}
-                  className="px-3 py-1.5 rounded-xl border border-[#dcd2b8] bg-[#fbf8f1] hover:bg-[#efe8d6] text-xs font-semibold text-[#143e22] cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-[#143e22] cursor-pointer"
                 >
                   Edit
                 </button>
@@ -249,7 +243,7 @@ export default function ListingDetailModal({
                   <button
                     type="button"
                     onClick={() => onToggleStatus(listing.id)}
-                    className="px-3 py-1.5 rounded-xl border border-[#dcd2b8] bg-[#fbf8f1] hover:bg-[#efe8d6] text-xs font-semibold text-[#5d281f] cursor-pointer"
+                    className="px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 cursor-pointer"
                   >
                     {listing.status === 'paused' ? 'Resume' : 'Pause'}
                   </button>

@@ -8,7 +8,7 @@ import ListingDetailModal from './ListingDetailModal'
 const STATUS_BADGES = {
   active: { label: 'Active', cls: 'bg-[#e8f3e1]/95 text-[#184828]' },
   paused: { label: 'Paused', cls: 'bg-[#f6eee0]/95 text-[#7a4b1e]' },
-  sold_out: { label: 'Reserved', cls: 'bg-[#ebe6d9]/95 text-[#465a48]' },
+  sold_out: { label: 'Sold Out', cls: 'bg-[#3c463d]/90 text-white' },
 }
 
 function shortGrade(grade = '') {
@@ -81,7 +81,7 @@ export default function FarmerListings() {
                 className={`px-3 py-1 rounded-full text-xs font-semibold border transition-colors cursor-pointer ${
                   active
                     ? 'bg-[#184828] text-white border-[#184828]'
-                    : 'bg-[#fffdf8] text-[#465a48] border-[#e2d8c1] hover:border-[#184828]'
+                    : 'bg-white text-slate-600 border-slate-200 hover:border-[#184828]'
                 }`}
               >
                 {tab}
@@ -95,25 +95,27 @@ export default function FarmerListings() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search produce..."
-          className="w-full sm:w-56 rounded-xl border border-[#dcd2b8] bg-[#fffdf8] px-3 py-1.5 text-base sm:text-xs text-[#143e22] placeholder:text-[#7c8c7e] focus:outline-none focus:border-[#184828]"
+          className="w-full sm:w-56 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-base sm:text-xs text-[#143e22] placeholder:text-slate-400 focus:outline-none focus:border-[#184828]"
         />
       </div>
 
       {/* 2-Card-Per-Row Mobile Grid -> 3-4 Cols Desktop */}
       {filteredListings.length === 0 ? (
-        <div className="rounded-2xl bg-[#fffdf8] border border-dashed border-[#dcd2b8] p-8 text-center">
+        <div className="rounded-2xl bg-white border border-dashed border-slate-300 p-8 text-center">
           <p className="font-serif text-base font-bold text-[#143e22]">No matching listings found</p>
           <p className="mt-1 text-xs text-[#5e7160]">
             Try switching filters or add a new produce listing.
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3.5">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-3.5">
           {filteredListings.map((item) => {
             const images = getListingImages(item)
             const available = Math.max(0, item.quantity - item.reservedQuantity)
-            const reservedPct = item.quantity > 0 ? Math.round((item.reservedQuantity / item.quantity) * 100) : 0
-            const badge = STATUS_BADGES[item.status] || STATUS_BADGES.active
+            const isSoldOut = item.status === 'sold_out' || available === 0
+            const badge = isSoldOut
+              ? STATUS_BADGES.sold_out
+              : STATUS_BADGES[item.status] || STATUS_BADGES.active
             const pendingOfferCount = offers.filter(
               (o) => o.listingId === item.id && o.status === 'pending_farmer'
             ).length
@@ -122,7 +124,11 @@ export default function FarmerListings() {
               <article
                 key={item.id}
                 onClick={() => setSelectedListingId(item.id)}
-                className="rounded-2xl bg-[#fffdf8] border border-[#e5dcbd] overflow-hidden shadow-2xs hover:border-[#184828]/45 hover:shadow-md transition-all flex flex-col cursor-pointer"
+                className={`rounded-2xl border overflow-hidden shadow-2xs transition-all flex flex-col cursor-pointer ${
+                  isSoldOut
+                    ? 'bg-slate-50 border-slate-200 opacity-65 grayscale-[45%] hover:opacity-90'
+                    : 'bg-white border-[#e2e6e1] hover:border-[#184828]/45 hover:shadow-md'
+                }`}
               >
                 {/* Photo Carousel Header */}
                 <div className="relative">
@@ -157,26 +163,25 @@ export default function FarmerListings() {
                       </span>
                     </div>
 
-                    <div className="mt-1.5 flex items-baseline justify-between gap-1 flex-wrap">
+                    <div className="mt-2 flex items-baseline justify-between gap-1 flex-wrap">
                       <span className="text-sm sm:text-base font-bold text-[#143e22]">
                         ₹{item.askingPrice}
                         <span className="text-[10px] sm:text-xs font-normal text-[#5e7160]">/{item.unit}</span>
                       </span>
-                      <span className="text-[10px] sm:text-[11px] font-medium text-[#465a48]">
-                        <strong className="text-[#143e22]">{available}</strong>/{item.quantity} {item.unit}
+                      <span className="text-[10.5px] sm:text-xs font-medium text-[#465a48]">
+                        {available > 0 ? (
+                          <>
+                            <strong className="text-[#143e22]">{available}</strong> {item.unit} left
+                          </>
+                        ) : (
+                          <strong className="text-[#5d281f]">Sold out</strong>
+                        )}
                       </span>
-                    </div>
-
-                    <div className="mt-1.5 h-1.5 w-full rounded-full bg-[#ebe4d3] overflow-hidden">
-                      <div
-                        className="h-full bg-[#184828] rounded-full transition-all"
-                        style={{ width: `${reservedPct}%` }}
-                      />
                     </div>
                   </div>
 
                   {/* Single-Company Viewed Status & Offer Shortcut */}
-                  <div className="pt-1.5 border-t border-[#f0e9d9] flex items-center justify-between gap-1 text-[10px] sm:text-[11px]">
+                  <div className="pt-1.5 border-t border-slate-100 flex items-center justify-between gap-1 text-[10px] sm:text-[11px]">
                     {item.companyViewed?.viewed ? (
                       <span className="inline-flex items-center gap-1 text-[#244e82] font-semibold">
                         <svg className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

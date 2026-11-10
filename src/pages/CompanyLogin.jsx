@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import {
   AuthEmailField,
   AuthPasswordField,
   AuthWaveBackdrop,
 } from '../components/AuthFields'
 import Footer from '../components/Footer'
+import { useCompany } from '../context/companyContextStore'
 import { validateCredentials } from '../utils/authValidation'
 
 const PROCUREMENT_HIGHLIGHTS = [
@@ -30,10 +31,18 @@ function BuildingMark({ className = 'w-4 h-4' }) {
 }
 
 export default function CompanyLogin() {
+  const { isAuthenticated, loginCompany } = useCompany()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const destination = location.state?.from || '/company/dashboard'
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState({})
-  const [submittedEmail, setSubmittedEmail] = useState('')
+
+  if (isAuthenticated) {
+    return <Navigate to={destination} replace />
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -41,9 +50,8 @@ export default function CompanyLogin() {
     setErrors(nextErrors)
 
     if (Object.keys(nextErrors).length === 0) {
-      setSubmittedEmail(email.trim())
-    } else {
-      setSubmittedEmail('')
+      loginCompany(email.trim())
+      navigate(destination, { replace: true })
     }
   }
 
@@ -70,12 +78,12 @@ export default function CompanyLogin() {
 
           {/* Left Form Panel */}
           <div className="lg:col-span-7 flex flex-col justify-between bg-white">
-            <div className="hidden lg:block h-1 w-full bg-gradient-to-r from-[#5d281f] via-[#184828] to-[#5d281f]" aria-hidden="true" />
+            <div className="hidden lg:block h-1 w-full bg-gradient-to-r from-[#1e293b] via-[#184828] to-[#1e293b]" aria-hidden="true" />
 
             <div className="p-5 sm:p-6 lg:px-8 lg:py-6 [@media(min-width:1280px)_and_(min-height:760px)]:p-9 flex-1 flex flex-col justify-center">
               <div className="hidden lg:block mb-4">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-[#faf3ee] border border-[#e5cfc2] text-[#5d281f] text-[11.5px] font-semibold mb-2">
-                  <BuildingMark className="w-3.5 h-3.5" />
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-slate-100 border border-slate-200 text-slate-800 text-[11.5px] font-semibold mb-2">
+                  <BuildingMark className="w-3.5 h-3.5 text-[#184828]" />
                   <span>Authorized Buyer Access</span>
                 </div>
                 <h1 className="font-serif text-2xl [@media(min-width:1280px)_and_(min-height:760px)]:text-3xl font-bold text-[#143e22] tracking-tight">
@@ -85,23 +93,6 @@ export default function CompanyLogin() {
                   Access your FarmLink procurement dashboard.
                 </p>
               </div>
-
-              {submittedEmail && (
-                <div
-                  role="status"
-                  className="mb-3.5 rounded-xl border border-[#dfc5b6] bg-[#faf2ed] px-3.5 py-2.5 text-xs sm:text-sm text-[#471e17]"
-                >
-                  <p className="font-semibold">
-                    Credentials validated for <span className="underline">{submittedEmail}</span>
-                  </p>
-                  <p className="mt-0.5 text-xs text-[#5d281f]">
-                    Backend authentication is not connected yet.{' '}
-                    <Link to="/company" className="font-semibold underline hover:text-[#3b1711]">
-                      Preview Company Dashboard →
-                    </Link>
-                  </p>
-                </div>
-              )}
 
               <form onSubmit={handleSubmit} noValidate className="space-y-3">
                 <AuthEmailField
@@ -115,7 +106,7 @@ export default function CompanyLogin() {
                   }}
                   error={errors.email}
                   bgClass="bg-[#fcfaf5]"
-                  focusClass="border-[#ddd3bc] focus-within:border-[#5d281f] focus-within:ring-[#5d281f]/12"
+                  focusClass="border-[#ddd3bc] focus-within:border-[#1e293b] focus-within:ring-slate-900/10"
                 />
 
                 <AuthPasswordField
@@ -127,12 +118,12 @@ export default function CompanyLogin() {
                   }}
                   error={errors.password}
                   bgClass="bg-[#fcfaf5]"
-                  focusClass="border-[#ddd3bc] focus-within:border-[#5d281f] focus-within:ring-[#5d281f]/12"
+                  focusClass="border-[#ddd3bc] focus-within:border-[#1e293b] focus-within:ring-slate-900/10"
                 />
 
                 <button
                   type="submit"
-                  className="w-full mt-1.5 py-2.5 px-5 rounded-xl bg-[#5d281f] hover:bg-[#471e17] text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all active:scale-[0.99] inline-flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full mt-1.5 py-2.5 px-5 rounded-xl bg-[#1e293b] hover:bg-[#0f172a] text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all active:scale-[0.99] inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <BuildingMark className="w-4 h-4" />
                   <span>Sign In to Procurement Desk</span>
@@ -142,7 +133,7 @@ export default function CompanyLogin() {
               <div className="mt-4 pt-3.5 border-t border-[#ece4d3] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 text-xs text-[#465a48]">
                 <p>
                   Admin-provisioned account.{' '}
-                  <Link to="/contact" className="font-semibold text-[#5d281f] hover:underline">
+                  <Link to="/contact" className="font-semibold text-[#1e293b] hover:underline">
                     Need access?
                   </Link>
                 </p>

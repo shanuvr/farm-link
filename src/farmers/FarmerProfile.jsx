@@ -42,16 +42,16 @@ export default function FarmerProfile() {
         </div>
       )}
       {resetNotice && (
-        <div className="rounded-xl bg-[#fbf5e6] border border-[#e3d2ab] px-4 py-2.5 text-xs sm:text-sm text-[#5d281f] font-medium">
+        <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-2.5 text-xs sm:text-sm text-amber-900 font-medium">
           Demo listings, offers, and orders have been reset to default sample records.
         </div>
       )}
 
       <form
         onSubmit={handleSave}
-        className="rounded-2xl bg-[#fffdf8] border border-[#e5dcbd] p-5 sm:p-6 shadow-xs space-y-4"
+        className="rounded-2xl bg-white border border-[#e2e6e1] p-5 sm:p-6 shadow-xs space-y-4"
       >
-        <div className="flex items-center justify-between gap-2 pb-3 border-b border-[#ede5d2]">
+        <div className="flex items-center justify-between gap-2 pb-3 border-b border-slate-100">
           <div>
             <p className="font-serif text-lg font-bold text-[#143e22]">{profile.name}</p>
             <p className="text-xs text-[#5e7160]">{profile.farmSize}</p>
@@ -71,7 +71,7 @@ export default function FarmerProfile() {
               type="text"
               value={form.name}
               onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
-              className="w-full rounded-xl border border-[#dcd2b8] bg-[#fbf8f1] px-3.5 py-2 text-base sm:text-sm text-[#143e22]"
+              className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none focus:border-[#184828]"
             />
           </div>
 
@@ -84,7 +84,7 @@ export default function FarmerProfile() {
               type="tel"
               value={form.phone}
               onChange={(e) => setForm((prev) => ({ ...prev, phone: e.target.value }))}
-              className="w-full rounded-xl border border-[#dcd2b8] bg-[#fbf8f1] px-3.5 py-2 text-base sm:text-sm text-[#143e22]"
+              className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none focus:border-[#184828]"
             />
           </div>
 
@@ -97,7 +97,7 @@ export default function FarmerProfile() {
               type="email"
               value={form.email}
               onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
-              className="w-full rounded-xl border border-[#dcd2b8] bg-[#fbf8f1] px-3.5 py-2 text-base sm:text-sm text-[#143e22]"
+              className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none focus:border-[#184828]"
             />
           </div>
 
@@ -110,7 +110,7 @@ export default function FarmerProfile() {
               type="text"
               value={form.district}
               onChange={(e) => setForm((prev) => ({ ...prev, district: e.target.value }))}
-              className="w-full rounded-xl border border-[#dcd2b8] bg-[#fbf8f1] px-3.5 py-2 text-base sm:text-sm text-[#143e22]"
+              className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none focus:border-[#184828]"
             />
           </div>
 
@@ -123,7 +123,7 @@ export default function FarmerProfile() {
               type="text"
               value={form.village}
               onChange={(e) => setForm((prev) => ({ ...prev, village: e.target.value }))}
-              className="w-full rounded-xl border border-[#dcd2b8] bg-[#fbf8f1] px-3.5 py-2 text-base sm:text-sm text-[#143e22]"
+              className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none focus:border-[#184828]"
             />
           </div>
         </div>
@@ -133,7 +133,7 @@ export default function FarmerProfile() {
             <button
               type="button"
               onClick={handleReset}
-              className="px-3.5 py-2 rounded-xl border border-[#dcd2b8] bg-[#fbf8f1] hover:bg-[#efe8d6] text-xs font-semibold text-[#5d281f] cursor-pointer"
+              className="px-3.5 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 cursor-pointer"
             >
               Reset Demo Data
             </button>

@@ -95,13 +95,13 @@ export default function FarmerOffers() {
               className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-colors cursor-pointer ${
                 active
                   ? 'bg-[#184828] text-white border-[#184828]'
-                  : 'bg-[#fffdf8] text-[#465a48] border-[#e2d8c1] hover:border-[#184828]'
+                  : 'bg-white text-slate-600 border-slate-200 hover:border-[#184828]'
               }`}
             >
               <span>{item.label}</span>
               <span
                 className={`px-1.5 rounded-full text-[10px] font-bold ${
-                  active ? 'bg-white/20 text-white' : 'bg-[#f1ead9] text-[#143e22]'
+                  active ? 'bg-white/20 text-white' : 'bg-slate-100 text-[#143e22]'
                 }`}
               >
                 {item.count}
@@ -113,7 +113,7 @@ export default function FarmerOffers() {
 
       {/* 2-Column Compact Offer Cards on Desktop */}
       {visibleOffers.length === 0 ? (
-        <div className="rounded-2xl bg-[#fffdf8] border border-dashed border-[#dcd2b8] p-8 text-center">
+        <div className="rounded-2xl bg-white border border-dashed border-slate-300 p-8 text-center">
           <p className="font-serif text-base font-bold text-[#143e22]">No offers in this tab</p>
           <p className="mt-1 text-xs text-[#5e7160]">
             {tab === 'action'
@@ -133,7 +133,7 @@ export default function FarmerOffers() {
             return (
               <article
                 key={offer.id}
-                className="rounded-2xl bg-[#fffdf8] border border-[#e5dcbd] p-4 shadow-2xs space-y-3"
+                className="rounded-2xl bg-white border border-[#e2e6e1] p-4 shadow-2xs space-y-3"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between gap-2">
@@ -154,13 +154,13 @@ export default function FarmerOffers() {
                     </div>
                   </div>
 
-                  <span className="text-[10.5px] font-semibold px-2 py-0.5 rounded-md bg-[#fbf8f1] border border-[#e5dcbd] text-[#5d281f] shrink-0">
+                  <span className="text-[10.5px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-slate-700 shrink-0">
                     {offer.expiresIn}
                   </span>
                 </div>
 
                 {/* Price & Quantity Comparison */}
-                <div className="grid grid-cols-3 gap-2 rounded-xl bg-[#fbf8f1] border border-[#ede5d2] px-3 py-2">
+                <div className="grid grid-cols-3 gap-2 rounded-xl bg-[#f8faf8] border border-[#e5e9e4] px-3 py-2">
                   <div>
                     <p className="text-[10px] text-[#5e7160] font-medium">Asking Price</p>
                     <p className="font-serif text-sm sm:text-base font-bold text-[#465a48]">
@@ -335,7 +335,7 @@ export default function FarmerOffers() {
 
                 {/* Primary Bargaining Actions */}
                 {offer.status === 'pending_farmer' && !isCountering && !isRejecting && (
-                  <div className="pt-2 border-t border-[#f0e9d9] flex flex-wrap items-center gap-2">
+                  <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2">
                     <button
                       type="button"
                       onClick={() => handleAccept(offer)}
@@ -346,7 +346,7 @@ export default function FarmerOffers() {
                     <button
                       type="button"
                       onClick={() => openCounter(offer)}
-                      className="flex-1 px-3.5 py-1.5 rounded-xl border border-[#5d281f]/55 bg-[#fcf7ea] hover:bg-[#5d281f] hover:text-white text-[#5d281f] text-xs font-semibold transition-colors cursor-pointer"
+                      className="flex-1 px-3.5 py-1.5 rounded-xl border border-slate-300 bg-white hover:bg-[#1e293b] hover:text-white text-slate-800 text-xs font-semibold transition-colors cursor-pointer"
                     >
                       Counteroffer
                     </button>

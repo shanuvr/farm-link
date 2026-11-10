@@ -5,10 +5,10 @@ export const KERALA_CROPS = [
   { name: 'Nendran Banana', unit: 'kg', suggestedPrice: 52, defaultImages: ['/crops/banana-1.jpg', '/crops/banana-2.jpg'] },
   { name: 'Violet Brinjal', unit: 'kg', suggestedPrice: 38, defaultImages: ['/crops/brinjal-1.jpg'] },
   { name: 'Yardlong Beans (Payar)', unit: 'kg', suggestedPrice: 60, defaultImages: ['/crops/beans-1.jpg'] },
-  { name: 'Okra (Vendakka)', unit: 'kg', suggestedPrice: 42, defaultImages: [] },
-  { name: 'Bitter Gourd (Pavakka)', unit: 'kg', suggestedPrice: 55, defaultImages: [] },
+  { name: 'Okra (Vendakka)', unit: 'kg', suggestedPrice: 42, defaultImages: ['/crops/okra-1.jpg'] },
+  { name: 'Bitter Gourd (Pavakka)', unit: 'kg', suggestedPrice: 55, defaultImages: ['/crops/bittergourd-1.jpg'] },
   { name: 'Snake Gourd (Padavalanga)', unit: 'kg', suggestedPrice: 34, defaultImages: [] },
-  { name: 'Fresh Farm Ginger', unit: 'kg', suggestedPrice: 110, defaultImages: [] },
+  { name: 'Fresh Farm Ginger', unit: 'kg', suggestedPrice: 110, defaultImages: ['/crops/ginger-1.jpg'] },
 ]
 
 const CROP_PHOTO_KEYWORDS = [
@@ -16,6 +16,9 @@ const CROP_PHOTO_KEYWORDS = [
   { match: ['banana', 'nendran'], images: ['/crops/banana-1.jpg', '/crops/banana-2.jpg'] },
   { match: ['brinjal', 'eggplant'], images: ['/crops/brinjal-1.jpg'] },
   { match: ['bean', 'payar'], images: ['/crops/beans-1.jpg'] },
+  { match: ['okra', 'vendakka'], images: ['/crops/okra-1.jpg'] },
+  { match: ['bitter', 'pavakka'], images: ['/crops/bittergourd-1.jpg'] },
+  { match: ['ginger'], images: ['/crops/ginger-1.jpg'] },
 ]
 
 export function getListingImages(listing) {

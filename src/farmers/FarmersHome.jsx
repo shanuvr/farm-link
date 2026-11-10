@@ -74,7 +74,7 @@ export default function FarmersHome() {
           <Link
             key={item.label}
             to={item.to}
-            className="rounded-xl bg-[#fffdf8] border border-[#e5dcbd] px-3.5 py-3 hover:border-[#184828]/45 hover:shadow-xs transition-all group"
+            className="rounded-xl bg-white border border-[#e2e6e1] px-3.5 py-3 hover:border-[#184828]/45 hover:shadow-xs transition-all group"
           >
             <div className="flex items-center justify-between gap-2">
               <span className="text-[11.5px] font-medium text-[#465a48]">{item.label}</span>
@@ -93,7 +93,7 @@ export default function FarmersHome() {
       {/* Main Content Split */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Offers Awaiting Response */}
-        <section className="lg:col-span-7 rounded-2xl bg-[#fffdf8] border border-[#e5dcbd] p-4">
+        <section className="lg:col-span-7 rounded-2xl bg-white border border-[#e2e6e1] p-4 shadow-2xs">
           <div className="flex items-center justify-between gap-2 mb-3">
             <h2 className="font-serif text-base sm:text-lg font-bold text-[#143e22]">
               Offers Awaiting Response
@@ -107,14 +107,14 @@ export default function FarmersHome() {
           </div>
 
           {pendingOffers.length === 0 ? (
-            <div className="rounded-xl bg-[#fbf8f1] border border-dashed border-[#dcd2b8] p-5 text-center">
+            <div className="rounded-xl bg-[#f8faf8] border border-dashed border-slate-300 p-5 text-center">
               <p className="text-sm font-semibold text-[#143e22]">No pending offers right now</p>
               <p className="mt-0.5 text-xs text-[#5e7160]">
                 New offers from the purchasing company will appear here.
               </p>
             </div>
           ) : (
-            <div className="divide-y divide-[#efe8d7]">
+            <div className="divide-y divide-slate-100">
               {pendingOffers.map((offer) => (
                 <div
                   key={offer.id}
@@ -150,7 +150,7 @@ export default function FarmersHome() {
         {/* Right Column: Next Collection & Activity */}
         <div className="lg:col-span-5 space-y-4">
           {nextPickup && (
-            <section className="rounded-2xl bg-[#fffdf8] border border-[#e5dcbd] p-4">
+            <section className="rounded-2xl bg-white border border-[#e2e6e1] p-4 shadow-2xs">
               <div className="flex items-center justify-between gap-2 mb-2">
                 <h2 className="font-serif text-base font-bold text-[#143e22]">
                   Next Confirmed Pickup
@@ -174,16 +174,16 @@ export default function FarmersHome() {
             </section>
           )}
 
-          <section className="rounded-2xl bg-[#fffdf8] border border-[#e5dcbd] p-4">
+          <section className="rounded-2xl bg-white border border-[#e2e6e1] p-4 shadow-2xs">
             <h2 className="font-serif text-base font-bold text-[#143e22] mb-2.5">
               Recent Activity
             </h2>
-            <div className="divide-y divide-[#f0e9d9]">
+            <div className="divide-y divide-slate-100">
               {notifications.slice(0, 3).map((item) => (
                 <Link
                   key={item.id}
                   to={item.link || '/farmers'}
-                  className="block py-2 first:pt-0 last:pb-0 hover:bg-[#fbf8f1] -mx-1 px-1 rounded-lg transition-colors"
+                  className="block py-2 first:pt-0 last:pb-0 hover:bg-slate-50 -mx-1 px-1 rounded-lg transition-colors"
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-xs font-semibold text-[#143e22] truncate">{item.title}</span>

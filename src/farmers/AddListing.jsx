@@ -130,12 +130,12 @@ export default function AddListing() {
       <form
         onSubmit={handleSubmit}
         noValidate
-        className="rounded-2xl bg-[#fffdf8] border border-[#e5dcbd] p-4 sm:p-5 shadow-2xs space-y-4"
+        className="rounded-2xl bg-white border border-[#e2e6e1] p-4 sm:p-5 shadow-2xs space-y-4"
       >
         {/* Listing Type Switcher */}
         <div>
           <span className="block text-xs font-semibold text-[#143e22] mb-1.5">Stock Availability Type</span>
-          <div className="grid grid-cols-2 gap-2 p-1 rounded-xl bg-[#f3ede0] border border-[#e3d9c3]">
+          <div className="grid grid-cols-2 gap-2 p-1 rounded-xl bg-[#f4f6f4] border border-slate-200">
             {['Ready Stock', 'Upcoming Harvest'].map((type) => {
               const active = form.type === type
               return (
@@ -168,7 +168,7 @@ export default function AddListing() {
                   className={`px-2.5 py-1 rounded-full text-xs font-medium border transition-colors cursor-pointer ${
                     selected
                       ? 'bg-[#184828] text-white border-[#184828]'
-                      : 'bg-[#fbf8f1] text-[#2a3c2c] border-[#dfd5be] hover:border-[#184828]'
+                      : 'bg-white text-slate-700 border-slate-200 hover:border-[#184828]'
                   }`}
                 >
                   {crop.name}
@@ -190,7 +190,7 @@ export default function AddListing() {
               value={form.productName}
               onChange={(e) => handleField('productName', e.target.value)}
               placeholder="e.g., Country Red Tomatoes"
-              className="w-full rounded-xl border border-[#dcd2b8] bg-[#fbf8f1]/80 focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-[#f8faf8] focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
             />
             {errors.productName && <p className="mt-1 text-xs text-[#b91c1c]">{errors.productName}</p>}
           </div>
@@ -203,7 +203,7 @@ export default function AddListing() {
               id="produce-grade"
               value={form.grade}
               onChange={(e) => handleField('grade', e.target.value)}
-              className="w-full rounded-xl border border-[#dcd2b8] bg-[#fbf8f1]/80 focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-[#f8faf8] focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
             >
               {QUALITY_GRADES.map((g) => (
                 <option key={g} value={g}>{g}</option>
@@ -225,7 +225,7 @@ export default function AddListing() {
               value={form.quantity}
               onChange={(e) => handleField('quantity', e.target.value)}
               placeholder="100"
-              className="w-full rounded-xl border border-[#dcd2b8] bg-[#fbf8f1]/80 focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-[#f8faf8] focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
             />
             {errors.quantity && <p className="mt-1 text-xs text-[#b91c1c]">{errors.quantity}</p>}
           </div>
@@ -238,7 +238,7 @@ export default function AddListing() {
               id="produce-unit"
               value={form.unit}
               onChange={(e) => handleField('unit', e.target.value)}
-              className="w-full rounded-xl border border-[#dcd2b8] bg-[#fbf8f1]/80 focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-[#f8faf8] focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
             >
               {UNIT_OPTIONS.map((u) => (
                 <option key={u} value={u}>{u}</option>
@@ -257,7 +257,7 @@ export default function AddListing() {
               value={form.askingPrice}
               onChange={(e) => handleField('askingPrice', e.target.value)}
               placeholder="45"
-              className="w-full rounded-xl border border-[#dcd2b8] bg-[#fbf8f1]/80 focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-[#f8faf8] focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
             />
             {errors.askingPrice && <p className="mt-1 text-xs text-[#b91c1c]">{errors.askingPrice}</p>}
           </div>
@@ -283,7 +283,7 @@ export default function AddListing() {
               type="date"
               value={form.harvestDate}
               onChange={(e) => handleField('harvestDate', e.target.value)}
-              className="w-full rounded-xl border border-[#dcd2b8] bg-[#fbf8f1]/80 focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-[#f8faf8] focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
             />
           </div>
 
@@ -296,7 +296,7 @@ export default function AddListing() {
               type="date"
               value={form.availableFrom}
               onChange={(e) => handleField('availableFrom', e.target.value)}
-              className="w-full rounded-xl border border-[#dcd2b8] bg-[#fbf8f1]/80 focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-[#f8faf8] focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
             />
           </div>
 
@@ -310,7 +310,7 @@ export default function AddListing() {
               value={form.location}
               onChange={(e) => handleField('location', e.target.value)}
               placeholder="Village, District"
-              className="w-full rounded-xl border border-[#dcd2b8] bg-[#fbf8f1]/80 focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-[#f8faf8] focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none"
             />
             {errors.location && <p className="mt-1 text-xs text-[#b91c1c]">{errors.location}</p>}
           </div>
@@ -329,7 +329,7 @@ export default function AddListing() {
             {form.images.map((src, idx) => (
               <div
                 key={`${src.slice(0, 32)}-${idx}`}
-                className="relative w-16 h-16 rounded-xl border border-[#dcd2b8] overflow-hidden shrink-0 bg-[#ebe4d3]"
+                className="relative w-16 h-16 rounded-xl border border-slate-200 overflow-hidden shrink-0 bg-slate-100"
               >
                 <img src={src} alt={`Upload ${idx + 1}`} className="w-full h-full object-cover" />
                 <button
@@ -346,7 +346,7 @@ export default function AddListing() {
             {form.images.length < 5 && (
               <label
                 htmlFor="produce-photos"
-                className="w-24 h-16 rounded-xl border border-dashed border-[#c9be9e] bg-[#fbf8f1] hover:border-[#184828] flex flex-col items-center justify-center text-center cursor-pointer shrink-0 transition-colors"
+                className="w-24 h-16 rounded-xl border border-dashed border-slate-300 bg-[#f8faf8] hover:border-[#184828] flex flex-col items-center justify-center text-center cursor-pointer shrink-0 transition-colors"
               >
                 <svg className="w-4 h-4 text-[#184828]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -378,7 +378,7 @@ export default function AddListing() {
             value={form.notes}
             onChange={(e) => handleField('notes', e.target.value)}
             placeholder="Packaging details, morning harvest time, organic practices..."
-            className="w-full rounded-xl border border-[#dcd2b8] bg-[#fbf8f1]/80 focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none resize-none"
+            className="w-full rounded-xl border border-slate-200 bg-[#f8faf8] focus:bg-white focus:border-[#184828] px-3 py-2 text-base sm:text-sm text-[#143e22] focus:outline-none resize-none"
           />
         </div>
 
@@ -387,7 +387,7 @@ export default function AddListing() {
           <button
             type="button"
             onClick={() => navigate('/farmers/listings')}
-            className="py-2 px-4 rounded-xl border border-[#dcd2b8] bg-[#fbf8f1] hover:bg-[#f2ebdb] text-[#143e22] font-semibold text-sm transition-colors cursor-pointer"
+            className="py-2 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-[#143e22] font-semibold text-sm transition-colors cursor-pointer"
           >
             Cancel
           </button>
