@@ -1,6 +1,29 @@
 import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 
+function CompanyIcon({ className = 'w-4 h-4' }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M3 9.5L12 3L21 9.5H3Z" />
+      <path d="M2 10.5H22" />
+      <path d="M5 11.5V18" />
+      <path d="M9.5 11.5V18" />
+      <path d="M14.5 11.5V18" />
+      <path d="M19 11.5V18" />
+      <path d="M2 18.5H22" />
+      <path d="M1 21H23" />
+    </svg>
+  )
+}
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
@@ -10,7 +33,7 @@ export default function Navbar() {
     { name: 'How It Works', path: '/how-it-works' },
     { name: 'About Us', path: '/about' },
     { name: 'FAQ', path: '/faq' },
-    { name: 'Contact', path: '/contact' }
+    { name: 'Contact', path: '/contact' },
   ]
 
   const isCurrentActive = (path) => {
@@ -20,18 +43,19 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#fbf8f1]/95 backdrop-blur-sm border-b border-[#e9e1ce]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+      <div className="parchment-top-strip h-1 w-full" aria-hidden="true" />
 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 lg:h-[48px] [@media(min-width:1280px)_and_(min-height:760px)]:h-[58px]">
           {/* Logo */}
           <Link
             to="/"
             onClick={() => setMobileOpen(false)}
-            className="flex items-center gap-2.5 select-none group shrink-0"
+            className="flex items-center gap-2 select-none group shrink-0"
           >
             <svg
               viewBox="0 0 72 62"
-              className="w-9 h-9 flex-shrink-0"
+              className="w-9 h-9 lg:w-10 lg:h-10 shrink-0"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -53,72 +77,58 @@ export default function Navbar() {
             </svg>
 
             <div className="flex flex-col leading-none">
-              <span className="font-serif text-xl font-bold tracking-tight text-[#143e22]">
+              <span className="font-serif text-[21px] lg:text-[23px] font-bold tracking-tight text-[#143e22]">
                 FarmLink
               </span>
-              <span className="hidden sm:block text-[10px] font-medium tracking-wide text-[#1f532e]/80 mt-0.5">
+              <span className="text-[9.5px] sm:text-[10px] font-medium tracking-wide text-[#1f532e]/85 mt-0.5">
                 Connecting Farmers with Buyers
               </span>
             </div>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1.5">
             {navLinks.map((item) => {
               const active = isCurrentActive(item.path)
               return (
                 <NavLink
                   key={item.name}
                   to={item.path}
-                  className={`text-sm transition-colors px-3 py-1.5 rounded-full ${
+                  className={`relative text-sm transition-colors px-3.5 py-1.5 rounded-full ${
                     active
-                      ? 'bg-[#184828] text-white font-semibold'
+                      ? 'bg-[#184828] text-white font-semibold shadow-2xs'
                       : 'text-[#2a3c2c] hover:text-[#184828] hover:bg-[#184828]/5 font-medium'
                   }`}
                 >
                   {item.name}
+                  {active && (
+                    <svg
+                      className="absolute left-1/2 -translate-x-1/2 -bottom-1.5 w-10 h-1.5 text-[#184828]"
+                      viewBox="0 0 40 6"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M2 3.5C14 0.5 26 0.5 38 3.5"
+                        stroke="currentColor"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  )}
                 </NavLink>
               )
             })}
           </nav>
 
-          {/* Desktop actions */}
-          <div className="hidden lg:flex items-center gap-2">
+          {/* Desktop action matching reference mockup */}
+          <div className="hidden lg:flex items-center">
             <Link
               to="/company"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#61281e]/70 text-[#61281e] hover:bg-[#61281e] hover:text-white font-semibold text-sm transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl border border-[#5d281f]/55 bg-[#fffdf8] text-[#5d281f] hover:bg-[#5d281f] hover:text-white font-semibold text-sm shadow-2xs transition-colors"
             >
-              <svg
-                className="w-4 h-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.9"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M3 9.5L12 3L21 9.5H3Z" />
-                <path d="M2 10.5H22" />
-                <path d="M5 11.5V18" />
-                <path d="M9.5 11.5V18" />
-                <path d="M14.5 11.5V18" />
-                <path d="M19 11.5V18" />
-                <path d="M2 18.5H22" />
-                <path d="M1 21H23" />
-              </svg>
-              <span>Company</span>
-            </Link>
-            <Link
-              to="/login"
-              className="text-sm font-medium text-[#2a3c2c] hover:text-[#184828] px-3 py-1.5 rounded-lg hover:bg-[#184828]/5 transition-colors"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="text-sm font-semibold text-white bg-[#184828] hover:bg-[#12381e] px-4 py-1.5 rounded-lg shadow-sm transition-colors"
-            >
-              Register
+              <CompanyIcon className="w-4 h-4" />
+              <span>Company Login</span>
             </Link>
           </div>
 
@@ -148,7 +158,7 @@ export default function Navbar() {
 
       {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="lg:hidden border-t border-[#e9e1ce] bg-[#fbf8f1] px-4 py-3 space-y-1">
+        <div className="lg:hidden border-t border-[#e9e1ce] bg-[#fbf8f1] px-4 py-3 space-y-1 shadow-md">
           {navLinks.map((item) => {
             const active = isCurrentActive(item.path)
             return (
@@ -171,26 +181,9 @@ export default function Navbar() {
             <Link
               to="/company"
               onClick={() => setMobileOpen(false)}
-              className="flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg border border-[#61281e]/70 text-[#61281e] hover:bg-[#61281e] hover:text-white font-semibold text-sm transition-colors"
+              className="flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg border border-[#5d281f]/65 text-[#5d281f] hover:bg-[#5d281f] hover:text-white font-semibold text-sm transition-colors"
             >
-              <svg
-                className="w-4 h-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.9"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M3 9.5L12 3L21 9.5H3Z" />
-                <path d="M2 10.5H22" />
-                <path d="M5 11.5V18" />
-                <path d="M9.5 11.5V18" />
-                <path d="M14.5 11.5V18" />
-                <path d="M19 11.5V18" />
-                <path d="M2 18.5H22" />
-                <path d="M1 21H23" />
-              </svg>
+              <CompanyIcon className="w-4 h-4" />
               <span>Company Login</span>
             </Link>
             <div className="grid grid-cols-2 gap-2">
@@ -199,7 +192,7 @@ export default function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 className="flex items-center justify-center py-2 rounded-lg border border-[#184828]/30 text-[#184828] font-semibold text-sm hover:bg-[#184828]/5 transition-colors"
               >
-                Login
+                Farmer Login
               </Link>
               <Link
                 to="/register"
