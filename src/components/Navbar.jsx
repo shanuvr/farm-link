@@ -122,7 +122,7 @@ export default function Navbar() {
           {/* Desktop action matching reference mockup */}
           <div className="hidden lg:flex items-center">
             <Link
-              to="/company"
+              to="/company/login"
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl border border-[#5d281f]/55 bg-[#fffdf8]/85 backdrop-blur-xs text-[#5d281f] hover:bg-[#5d281f] hover:text-white font-semibold text-sm shadow-2xs transition-colors"
             >
               <CompanyIcon className="w-4 h-4" />
@@ -177,7 +177,7 @@ export default function Navbar() {
 
           <div className="pt-3 mt-2 border-t border-[#e9e1ce] flex flex-col gap-2">
             <Link
-              to="/company"
+              to="/company/login"
               onClick={() => setMobileOpen(false)}
               className="flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg border border-[#5d281f]/65 text-[#5d281f] hover:bg-[#5d281f] hover:text-white font-semibold text-sm transition-colors"
             >

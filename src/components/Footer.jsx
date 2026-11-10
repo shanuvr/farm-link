@@ -62,7 +62,7 @@ export default function Footer({ showWave = true }) {
             <ul className="space-y-2 text-sm text-green-100/80">
               <li><Link to="/register" className="hover:text-white transition">Farmer Registration</Link></li>
               <li><Link to="/login" className="hover:text-white transition">Farmer Login</Link></li>
-              <li><Link to="/company" className="hover:text-white transition">Company Procurement Portal</Link></li>
+              <li><Link to="/company/login" className="hover:text-white transition">Company Procurement Portal</Link></li>
               <li><Link to="/admin" className="hover:text-white transition">Admin Control Center</Link></li>
             </ul>
           </div>

@@ -5,6 +5,7 @@ import About from './pages/About'
 import HowItWorks from './pages/HowItWorks'
 import Register from './pages/Register'
 import Login from './pages/Login'
+import CompanyLogin from './pages/CompanyLogin'
 import Contact from './pages/Contact'
 import FAQ from './pages/FAQ'
 import FarmersHome from './farmers/FarmersHome'
@@ -22,6 +23,7 @@ function App() {
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/company/login" element={<CompanyLogin />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/farmers" element={<FarmersHome />} />
