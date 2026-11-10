@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: 'Lora', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --color-farm-dark: #133e21;
+  --color-farm-green: #1a4d2e;
+  --color-farm-lightgreen: #2c6e43;
+  --color-farm-cream: #fbf8f1;
+  --color-farm-cream-light: #fffdf8;
+  --color-farm-brown: #5d281f;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-farm-cream);
+  color: #2c3e2d;
+}
