@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FarmLinkMobileHeaderBrand, FarmLinkSidebarBrand } from '../components/FarmerIcons'
+import { useDismissPopover } from '../utils/useDismissPopover'
 import {
   ADMIN_PROFILE,
   INITIAL_FARMER_APPLICATIONS,
@@ -95,6 +96,9 @@ export default function AdminHome() {
   const [inspectingApp, setInspectingApp] = useState(null)
   const [notice, setNotice] = useState('')
   const [notifOpen, setNotifOpen] = useState(false)
+  const notifRef = useRef(null)
+  const closeNotif = useCallback(() => setNotifOpen(false), [])
+  useDismissPopover(notifRef, notifOpen, closeNotif)
 
   const pendingApps = applications.filter((a) => a.status === 'pending')
   const approvedApps = applications.filter((a) => a.status === 'approved')
@@ -305,7 +309,7 @@ export default function AdminHome() {
 
           <div className="flex items-center gap-2">
             {/* Notification Bell */}
-            <div className="relative">
+            <div className="relative" ref={notifRef}>
               <button
                 type="button"
                 onClick={() => setNotifOpen((prev) => !prev)}
@@ -322,7 +326,7 @@ export default function AdminHome() {
               </button>
 
               {notifOpen && (
-                <div className="absolute right-0 mt-2 w-72 bg-white border border-slate-200 rounded-2xl shadow-xl p-3 z-50 space-y-2 text-xs">
+                <div className="absolute -right-24 sm:right-0 mt-2 w-[min(288px,calc(100vw-1.5rem))] sm:w-72 bg-white border border-slate-200 rounded-2xl shadow-xl p-3 z-50 space-y-2 text-xs">
                   <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                     <span className="font-bold text-slate-900">KYC Verification Alerts</span>
                     <button
